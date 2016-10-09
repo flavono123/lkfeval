@@ -1,0 +1,124 @@
+execve("/bin/cp", ["cp", "/home/flavono/LKFES/project/LKFE"..., "/home/flavono/LKFES/project/LKFE"...], [/* 32 vars */]) = 0
+brk(NULL)                               = 0x234b000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f1995784000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=94390, ...}) = 0
+mmap(NULL, 94390, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f199576c000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libselinux.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260Z\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=130224, ...}) = 0
+mmap(NULL, 2234080, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f199533f000
+mprotect(0x7f199535e000, 2093056, PROT_NONE) = 0
+mmap(0x7f199555d000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e000) = 0x7f199555d000
+mmap(0x7f199555f000, 5856, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f199555f000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libacl.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20\34\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=31232, ...}) = 0
+mmap(NULL, 2126336, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f1995137000
+mprotect(0x7f199513e000, 2093056, PROT_NONE) = 0
+mmap(0x7f199533d000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6000) = 0x7f199533d000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libattr.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\300\20\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=18624, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f199576b000
+mmap(NULL, 2113760, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f1994f32000
+mprotect(0x7f1994f36000, 2093056, PROT_NONE) = 0
+mmap(0x7f1995135000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7f1995135000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P\t\2\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=1864888, ...}) = 0
+mmap(NULL, 3967488, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f1994b69000
+mprotect(0x7f1994d29000, 2093056, PROT_NONE) = 0
+mmap(0x7f1994f28000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1bf000) = 0x7f1994f28000
+mmap(0x7f1994f2e000, 14848, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f1994f2e000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libpcre.so.3", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0000\25\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=456632, ...}) = 0
+mmap(NULL, 2552072, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f19948f9000
+mprotect(0x7f1994967000, 2097152, PROT_NONE) = 0
+mmap(0x7f1994b67000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6e000) = 0x7f1994b67000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\240\r\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=14608, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f199576a000
+mmap(NULL, 2109680, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f19946f5000
+mprotect(0x7f19946f8000, 2093056, PROT_NONE) = 0
+mmap(0x7f19948f7000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7f19948f7000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\360`\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=138744, ...}) = 0
+mmap(NULL, 2212904, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f19944d8000
+mprotect(0x7f19944f0000, 2093056, PROT_NONE) = 0
+mmap(0x7f19946ef000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17000) = 0x7f19946ef000
+mmap(0x7f19946f1000, 13352, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f19946f1000
+close(3)                                = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f1995769000
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f1995767000
+arch_prctl(ARCH_SET_FS, 0x7f1995767800) = 0
+mprotect(0x7f1994f28000, 16384, PROT_READ) = 0
+mprotect(0x7f19946ef000, 4096, PROT_READ) = 0
+mprotect(0x7f19948f7000, 4096, PROT_READ) = 0
+mprotect(0x7f1994b67000, 4096, PROT_READ) = 0
+mprotect(0x7f1995135000, 4096, PROT_READ) = 0
+mprotect(0x7f199533d000, 4096, PROT_READ) = 0
+mprotect(0x7f199555d000, 4096, PROT_READ) = 0
+mprotect(0x623000, 4096, PROT_READ)     = 0
+mprotect(0x7f1995786000, 4096, PROT_READ) = 0
+munmap(0x7f199576c000, 94390)           = 0
+set_tid_address(0x7f1995767ad0)         = 7420
+set_robust_list(0x7f1995767ae0, 24)     = 0
+rt_sigaction(SIGRTMIN, {0x7f19944ddb90, [], SA_RESTORER|SA_SIGINFO, 0x7f19944e93d0}, NULL, 8) = 0
+rt_sigaction(SIGRT_1, {0x7f19944ddc20, [], SA_RESTORER|SA_RESTART|SA_SIGINFO, 0x7f19944e93d0}, NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+statfs("/sys/fs/selinux", 0x7ffc66bc5600) = -1 ENOENT (No such file or directory)
+statfs("/selinux", 0x7ffc66bc5600)      = -1 ENOENT (No such file or directory)
+brk(NULL)                               = 0x234b000
+brk(0x236c000)                          = 0x236c000
+open("/proc/filesystems", O_RDONLY)     = 3
+fstat(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(3, "nodev\tsysfs\nnodev\trootfs\nnodev\tr"..., 1024) = 371
+read(3, "", 1024)                       = 0
+close(3)                                = 0
+open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=11527184, ...}) = 0
+mmap(NULL, 11527184, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f19939d9000
+close(3)                                = 0
+geteuid()                               = 1000
+stat("/home/flavono/LKFES/project/LKFES/test/copy_file_range/copy_512.txt", 0x7ffc66bc5480) = -1 ENOENT (No such file or directory)
+stat("/home/flavono/LKFES/project/LKFES/test/copy_file_range/origin_512.txt", {st_mode=S_IFREG|0664, st_size=512, ...}) = 0
+stat("/home/flavono/LKFES/project/LKFES/test/copy_file_range/copy_512.txt", 0x7ffc66bc5210) = -1 ENOENT (No such file or directory)
+open("/home/flavono/LKFES/project/LKFES/test/copy_file_range/origin_512.txt", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0664, st_size=512, ...}) = 0
+open("/home/flavono/LKFES/project/LKFES/test/copy_file_range/copy_512.txt", O_WRONLY|O_CREAT|O_EXCL, 0664) = 4
+fstat(4, {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+fadvise64(3, 0, 0, POSIX_FADV_SEQUENTIAL) = 0
+mmap(NULL, 139264, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f1995745000
+read(3, "\370\362J\r\326\352\265]\0259\346`[jB\237%\303\307\4\277\324\227\26\336\225-|\344\217l0"..., 131072) = 512
+write(4, "\370\362J\r\326\352\265]\0259\346`[jB\237%\303\307\4\277\324\227\26\336\225-|\344\217l0"..., 512) = 512
+read(3, "", 131072)                     = 0
+close(4)                                = 0
+close(3)                                = 0
+munmap(0x7f1995745000, 139264)          = 0
+lseek(0, 0, SEEK_CUR)                   = -1 ESPIPE (Illegal seek)
+close(0)                                = 0
+close(1)                                = 0
+close(2)                                = 0
+exit_group(0)                           = ?
++++ exited with 0 +++

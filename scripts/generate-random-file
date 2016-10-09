@@ -13,8 +13,11 @@ for ((i=1;i<11;i++)); do
         i=10
     fi
     size=`expr "$i" "*" "512"`
-    output=origin_$size.txt
-    dd if=$RND of=$DIR$output count=$i 2>/dev/null
+    origin=$DIR"origin_$size.txt"
+    copy=$DIR"copy_$size.txt"
+    log=$DIR"strace_$size.log"
+    dd if=$RND of=$origin count=$i 2>/dev/null
+    strace cp $origin $copy > $log 2>&1
 done
 
-echo "Generated origin files for test,'copy_file_range()'"
+echo "Generated origin, copy and log files for test,'copy_file_range()'"
