@@ -1,0 +1,32 @@
+Will run 2 OpenMP threads
+Benchmarking: descrypt, traditional crypt(3) [DES 128/128 SSE2-16]... DONE
+Many salts:	4187K c/s real, 2095K c/s virtual
+Only one salt:	4032K c/s real, 2018K c/s virtual
+
+Benchmarking: bsdicrypt, BSDI crypt(3) ("_J9..", 725 iterations) [DES 128/128 SSE2-16]... DONE
+Many salts:	143360 c/s real, 71608 c/s virtual
+Only one salt:	138781 c/s real, 69599 c/s virtual
+
+Benchmarking: md5crypt [MD5 32/64 X2]... DONE
+Raw:	29491 c/s real, 14745 c/s virtual
+
+Benchmarking: bcrypt ("$2a$05", 32 iterations) [Blowfish 32/64 X2]... DONE
+Raw:	1837 c/s real, 920 c/s virtual
+
+Benchmarking: LM [DES 128/128 SSE2-16]... DONE
+Raw:	57901K c/s real, 28921K c/s virtual
+
+Benchmarking: AFS, Kerberos AFS [DES 48/64 4K]... DONE
+Short:	486809 c/s real, 486809 c/s virtual
+Long:	1617K c/s real, 1617K c/s virtual
+
+Benchmarking: tripcode [DES 128/128 SSE2-16]... DONE
+Raw:	3591K c/s real, 1795K c/s virtual
+
+Benchmarking: dummy [N/A]... DONE
+Raw:	67285K c/s real, 67419K c/s virtual
+
+Benchmarking: crypt, generic crypt(3) [?/64]... DONE
+Many salts:	711878 c/s real, 355583 c/s virtual
+Only one salt:	705600 c/s real, 353153 c/s virtual
+
