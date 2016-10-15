@@ -61,20 +61,50 @@ print "k_configs : ", k_configs
 #if git does not exist
 shell_command("command -v git", "failed : git does not exist")
 
+
+
 #if src does not exist, git clone
 if os.path.isdir(k_src_dir) :
+	print("source not founded.")
+	print("git clone "+k_repo)
 	shell_command("git clone "+k_repo)
 
+
+
+print("cd "+k_src_dir)
+os.chdir(k_src_dir)
+
+print("checkout "+k_version)
 shell_command("git chekcout v"+k_version)
 
 #TODO maybe initial kernel repo doesn't have .config
 print("configureing...")
+'''
 config_keys = k_configs.keys()
-with open(k_src_dir="/new_config", 'w') as new_config :
-	with open(k_src_dir+"/.config") as config :
-		for line in config :
+with open(k_src_dir="/new_config", 'w') as fnew_config :
+	with open(k_src_dir+"/.config") as fconfig :
+		for line in fconfig :
+			if line.startswith('#'):
+				break
 			for config in config_keys :
 				if line.startswith(config) : #if already there is the config
+					fnew_config.write(config+"="+k_configs[config]
+os.rename(k_src_dir+"/new_config", k_src_dir+"/.config")
+'''
+for k,v in k_configs.iteritems() :
+	if v.startswith('"') :
+		shell_command('./scripts/config --set_str %s %s' % (k, v))
+	else :
+		shell_command('./scripts/config --set_val %s %s' % (k, v))
+
+print("kernel extra version : ", k_version)
+shell_command('sed -i "s/EXTRAVERSION =/EXTRAVERSION = %s/g" Makefile' % k_version)
+
+print("make...")
+shell_command("make")
+print("make install...")
+shell_command("make install")
+
 				
 				
 			
