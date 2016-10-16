@@ -114,10 +114,11 @@ for k,v in k_configs.items() :
 		shell_command('./scripts/config --set-val %s %s' % (k, v))
 
 print("kernel extra version : ", k_extra)
-shell_command('sed -i "s/EXTRAVERSION =.*/EXTRAVERSION = %s/g" Makefile' % k_extra)
+#shell_command('sed -i "s/EXTRAVERSION =.*/EXTRAVERSION = %s/g" Makefile' % k_extra)
+#make에 EXTRAVERSION=xxx 인자로 해서 줄 수있는듯, 그러면 소스변경이 없으니 stash도 필요없겠지?
 
 print("make...")
-shell_command("make")
+shell_command("make EXTRAVERSION=%s" % k_extra)
 print("make install...")
 shell_command("make install")
 
