@@ -10,13 +10,14 @@ then
 fi
 
 prev_image=`grep -w "^GRUB_DEFAULT" $GRUB_FILE | awk -F'=' '{print $2}'`
-echo "Previous default booting kernel image was $prev_image"
+#echo "Previous default booting kernel image was $prev_image"
 
 # Backup the previous grub file.
 cp $GRUB_FILE $GRUB_FILE.old
 
 # Modify and adjust the new kernel image as default booting image.
-sed -i "s/GRUB_DEFAULT=$prev_image/GRUB_DEFAULT=$BOOT_IMAGE/g" $GRUB_FILE
+# sed -i 's/GRUB_DEFAULT=*/GRUB_DEFAULT=$BOOT_IMAGE/g' $GRUB_FILE
+sed -i "s/GRUB_DEFAULT=${prev_image}/GRUB_DEFAULT=${BOOT_IMAGE}/" $GRUB_FILE
 update-grub
 echo "Default booting kernel image is changed to $BOOT_IMAGE"
 #echo "System reboots now!"

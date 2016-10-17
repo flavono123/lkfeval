@@ -1,0 +1,10 @@
+src/copy_file_range logs/origin_512.txt logs/copy_512.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
+src/copy_file_range logs/origin_1024.txt logs/copy_1024.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
+src/copy_file_range logs/origin_1536.txt logs/copy_1536.txt	user: 0.00	system: 0.00	cpu: 0%	total: 0.00
+src/copy_file_range logs/origin_2048.txt logs/copy_2048.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
+src/copy_file_range logs/origin_2560.txt logs/copy_2560.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
+src/copy_file_range logs/origin_3072.txt logs/copy_3072.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
+src/copy_file_range logs/origin_5120.txt logs/copy_5120.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
+src/copy_file_range logs/origin_4096.txt logs/copy_4096.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
+src/copy_file_range logs/origin_4608.txt logs/copy_4608.txt	user: 0.00	system: 0.00	cpu: 0%	total: 0.00
+src/copy_file_range logs/origin_5120.txt logs/copy_5120.txt	user: 0.00	system: 0.00	cpu: ?%	total: 0.00
