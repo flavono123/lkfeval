@@ -22,22 +22,39 @@ check_valid_feature(){
 
 
 required_arg_cnt=0
-REQ_ARG_CNT=2
+REQ_ARG_CNT=3 #TODO -v, -f|-c 로 체크해야함. f나 c가 선택이기떄문에 카운트로 검사하면 안댐.
 version=''
 feature=''
 path=''
+config=''
+extraversion=''
+eval_script=''
 
 while [ "$1" != "" ]; do
 	case $1 in
-		"-k")
+		"-v")
 			shift
 			version=$1  
-			(( required_arg_cnt++ ))
+			required_arg_cnt=`expr $required_arg_cnt "+" "1"`
 			;;
 		"-f")
 			shift
 			feature=$1
-			(( required_arg_cnt++ ))
+			required_arg_cnt=`expr $required_arg_cnt "+" "1"`
+			;;
+		"-c")
+			shift
+			config=$1
+			required_arg_cnt=`expr $required_arg_cnt "+" "1"`
+			;;
+		"-s")
+			shift
+			eval_script=$1
+			required_arg_cnt=`expr $required_arg_cnt "+" "1"`
+			;;
+		"-e")
+			shift
+			extraversion=$1
 			;;
 		"-l")
 			shift
@@ -49,12 +66,17 @@ while [ "$1" != "" ]; do
 	esac
 done 
 
-
 if [ $required_arg_cnt -lt $REQ_ARG_CNT ]
 then
 	echo "error : missing required args"
 	exit 1
 fi
+
+if [ -z $extraversion ]; then
+	extraversion="-$feature"
+fi
+
+
 
 if check_valid_feature $feature; then
 	echo "valid feature : $feature"
@@ -104,8 +126,14 @@ if ! vmrun start "$virtual_machine"; then
 	exit 71
 fi
 
-echo "Host's shared folder(  which data and source is read from, write to) : "
-read host_shared_folder
+#echo "Host's shared folder(  which data and source is read from, write to) : "
+#read host_shared_folder
+
+shell_dir=$(dirname $0)
+cd shell_dir
+cd ..
+cd ..
+host_shared_folder=pwd #root dir
 
 if [ ! -d "$host_shared_folder" ]; then
 	echo "Ther is no $host_shared_folder"
@@ -132,17 +160,20 @@ if ! vmrun addSharedFolder "$virtual_machine" "$shared_name" "$host_shared_folde
 fi
 
 #TODO have to change to youngmin's script( maybe in shared folder )
-compile_script=/bin/vmtest.sh
+compile_script=$geust_shared_dir_linux/core/scripts/kmake.py
 #TODO have to change to youngmin's script' args (version, config?)
-compile_script_args="$guest_shared_dir_linux/compile.test"
+compile_script_args="-v v$version -c $config -e $extraversion"
 
 
 #maybe root
 #TODO root as default
-echo "guest_user(maybe root) : "
-read guest_user
-echo "guest_passwd : "
-read guest_passwd
+#echo "guest_user(maybe root) : "
+#read guest_user
+#echo "guest_passwd : "
+#read guest_passwd
+
+guest_user='root'
+guest_passwd='root'
 
 #
 if ! vmrun -gu $guest_user -gp $guest_passwd runProgramInGuest \
@@ -155,11 +186,12 @@ vmrun reset "$virtual_machine"
 
 
 #feature evaluation (maybe in shared folder) TODO
-feature_eval_script=/bin/vmtest.sh
-feature_eval_script_args="$guest_shared_dir_linux/feature_evaluation.test"
+feature_eval_script="$guest_shared_dir_linux/feature-evals/$eval_script"
+#feature_eval_script_args="$guest_shared_dir_linux/feature_evaluation.test"
 
+#TODO kfeature_eval에서 각 피쳐 스크립트를 실행 시킨 결과를 logs폴더로 "특정 규칙의 이름"으로 리다이렉션 시켜야한다.
 if ! vmrun -gu $guest_user -gp $guest_passwd runProgramInGuest \
-	"$virtual_machine" "$feature_eval_script" $feature_eval_script_args; then
+	"$virtual_machine" "$feature_eval_script"; then
 	echo "failed : feature evaluation script execution."
 	exit 73
 fi
@@ -167,7 +199,7 @@ fi
 #clean
 vmrun removeSharedFolder "$virtual_machine" "$shared_name" 1>/dev/null 2>/dev/null 
 
-echo "feature evaluatoin finished"
-cat "$host_shared_folder/feature_evaluation.test"
-echo done
 
+echo "feature evaluatoin finished"
+#cat "$host_shared_folder/feature_evaluation.test"
+echo done
