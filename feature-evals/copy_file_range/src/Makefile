@@ -5,20 +5,22 @@ SYSCALL_ADDRESS = 0x$(subst R sys_call_table,,$(shell grep R\ sys_call_table /bo
 
 CFLAGS_syscall_hooker.o += -DSYSCALL_TABLE=$(SYSCALL_ADDRESS)
 
+CFLAGS_copy_file_range.o += -pg
+
 KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
+
 
 default:
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
 
-test: default $(SRCS:.c=)
+run: default $(SRCS:.c=)
 	sudo insmod syscall_hooker.ko
-	./$(SRCS:.c=) test test2
-	diff test test2
+	./$(SRCS:.c=) origin_512.txt copy_file_range512.txt
 	sudo rmmod syscall_hooker
 
 $(SRCS:.c=):$(SRCS:.c=.o)
 
 clean:
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) clean
-	$(RM) -rf copy_file_range.o copy_file_range test test2
+	$(RM) -rf copy_file_range.o copy_file_range
