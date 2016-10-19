@@ -3,9 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <sys/syscall.h>
 #include <unistd.h>
 #include <sys/mman.h>
 #include <time.h>
+
+#define __NR_copy_file_range 326
 
 #define MMAP_SIZE 139264 
 #define BUF_SIZE  131072
@@ -22,6 +25,12 @@ diff(struct timespec start, struct timespec end)
         tmp.tv_nsec = end.tv_nsec - start.tv_nsec;
     }
     return tmp;
+}
+
+static loff_t
+copy_file_range(int fd_in, loff_t *off_in, int fd_out, loff_t *off_out, size_t len, unsigned int flags)
+{
+    return syscall(__NR_copy_file_range, fd_in, off_in, fd_out, off_out, len, flags);
 }
 
 int
@@ -48,6 +57,7 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     
+    
     fd_out = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (fd_out == -1) {
         perror("open (argv[2])");
@@ -63,20 +73,15 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    do {
-        ret = read(fd_in, buf, BUF_SIZE);
+     do {
+        ret = copy_file_range(fd_in, NULL, fd_out, NULL, len, 0);
         if (ret == -1) {
-            perror("read");
-            exit(EXIT_FAILURE);
-        }
-        ret = write(fd_out, buf, BUF_SIZE);
-        if (ret == -1) {
-            perror("write");
+            perror("copy_file_range");
             exit(EXIT_FAILURE);
         }
         len -= ret;
     } while (len > 0);
-   
+
     if (clock_gettime(CLOCK_MONOTONIC, &end_ts) == -1) {
         perror("clock_gettime");
         exit(EXIT_FAILURE);
