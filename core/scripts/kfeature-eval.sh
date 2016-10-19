@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 #args : k, f, l
 #k - kernel version, f - feature, l = locatoin of vmrun
 
