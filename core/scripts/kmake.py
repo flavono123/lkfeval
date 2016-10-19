@@ -3,13 +3,18 @@
 import sys
 import os
 
+f = open('/home/bigs/testb', 'a+')
+sys.stderr = f
+sys.stdout = f
+
 required_ops = ["-v"]
 k_version = ''
 k_extra = ''
 k_configs = dict() # { "CONFIG_A" : "y", "CONFIG_B" : "m", ...}
 
-k_src_dir = "/usr/src/linux"
-k_repo = "https://github.com/torvalds/linux.git"
+k_src_dir = "/usr/src/linux-stable"
+#k_repo = "https://github.com/torvalds/linux.git" #
+k_repo = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git"
 
 def print_help():
 	print("print_help")
@@ -19,6 +24,7 @@ def eprint(*args, **kwargs):
 
 def shell_command(command, error_str='', print_on_error=True, exit_on_error=True) :
 	ret = os.system(command)
+	
 	if ret : 
 		if print_on_error :
 			if error_str :
@@ -87,14 +93,15 @@ os.chdir(k_src_dir)
 
 shell_command("git stash", exit_on_error=False)
 shell_command("git stash drop", exit_on_error=False)
+#reset --hard 하는게 나은듯?
 
 print("checkout "+k_version)
 shell_command("git checkout v"+k_version)
 
 #TODO maybe initial kernel repo doesn't have .config
 print("configureing...")
-shell_command("echo -ne '\n' | make localmodconfig") #TODO require default configㅑ
-shell_command("echo -ne '\n' | make oldconfig") #엔터 자동입력으로 하면 localmodeconfig가 oldconfig로 넘어가는 중에 에러를 뱉으며 죽는다. 때문에 oldconfig 디폴트값으로 다시 설정해줘야함
+shell_command("yes '' | make localmodconfig") #TODO require default configㅑ
+shell_command("yes '' | make oldconfig") #엔터 자동입력으로 하면 localmodeconfig가 oldconfig로 넘어가는 중에 에러를 뱉으며 죽는다. 때문에 oldconfig 디폴트값으로 다시 설정해줘야함
 '''
 config_keys = k_configs.keys()
 with open(k_src_dir="/new_config", 'w') as fnew_config :

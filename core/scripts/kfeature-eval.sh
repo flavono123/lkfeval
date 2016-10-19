@@ -130,10 +130,10 @@ fi
 #read host_shared_folder
 
 shell_dir=$(dirname $0)
-cd shell_dir
+cd ${shell_dir}
 cd ..
 cd ..
-host_shared_folder=pwd #root dir
+host_shared_folder=`pwd` #root dir
 
 if [ ! -d "$host_shared_folder" ]; then
 	echo "Ther is no $host_shared_folder"
@@ -160,9 +160,9 @@ if ! vmrun addSharedFolder "$virtual_machine" "$shared_name" "$host_shared_folde
 fi
 
 #TODO have to change to youngmin's script( maybe in shared folder )
-compile_script=$geust_shared_dir_linux/core/scripts/kmake.py
+compile_script=$guest_shared_dir_linux/core/scripts/kmake.py
 #TODO have to change to youngmin's script' args (version, config?)
-compile_script_args="-v v$version -c $config -e $extraversion"
+compile_script_args="-v $version -c $config -e $extraversion"
 
 
 #maybe root
@@ -178,7 +178,7 @@ guest_passwd='root'
 #
 if ! vmrun -gu $guest_user -gp $guest_passwd runProgramInGuest \
 	"$virtual_machine" "$compile_script" $compile_script_args; then
-	echo "failed : compile script execution."
+	echo "failed : $compile_script $compile_script_args compile script execution."
 	exit 72
 fi
 

@@ -5,6 +5,7 @@ import json
 import sys
 import os
 
+
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
@@ -70,17 +71,17 @@ img_cnt = feature['image_cnt']
 feature_imgs = feature['images']
 
 scripts_path = 'core/scripts/'
-kfe_path = scripts_path+'kfeature_evaluation.sh'
+kfe_path = scripts_path+'kfeature-eval.sh'
 
-for i in img_cnt:
+for i in range(img_cnt):
 	version = feature_imgs[i]['version']
 	configs = feature_imgs[i]['config']
 	configs_string = ''
-	for k, v in configs:
+	for k, v in configs.items():
 		configs_string += k+'='+v+','
 	configs_string = configs_string[:-1]
 	print(kfe_path+' -v '+ feature_imgs[i]['version']+' -c '+configs_string + ' -e '+eval_fname+'i')
-	shell_command(kfe_path+' -v '+feature_imgs[i]+' -c '+configs_string+' -e '+eval_fname+'i')
+	shell_command(kfe_path+' -v '+version+' -c '+configs_string+' -e '+eval_fname+'i'+' -s '+eval_script)
 
 
 
