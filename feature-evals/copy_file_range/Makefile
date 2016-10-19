@@ -1,4 +1,5 @@
 CFLAGS += -pg
+LDFLAGS += -lrt
 
 SRCS := copy_file_range.c
 

@@ -6,11 +6,26 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <time.h>
 
 #define __NR_copy_file_range 326
 
 #define MMAP_SIZE 139264 
 #define BUF_SIZE  131072
+
+struct timespec 
+diff(struct timespec start, struct timespec end) 
+{
+    struct timespec tmp;
+    if ((end.tv_nsec - start.tv_nsec) < 0) {
+        tmp.tv_sec = end.tv_sec - start.tv_sec - 1;
+        tmp.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
+    } else {
+        tmp.tv_sec = end.tv_sec - start.tv_sec;
+        tmp.tv_nsec = end.tv_nsec - start.tv_nsec;
+    }
+    return tmp;
+}
 
 static loff_t
 copy_file_range(int fd_in, loff_t *off_in, int fd_out, loff_t *off_out, size_t len, unsigned int flags)
@@ -25,6 +40,7 @@ main(int argc, char **argv)
     struct stat stat;
     loff_t len, ret;
     void *buf;
+    struct timespec start_ts, end_ts;
     
     if (argc != 3) {
         fprintf(stderr, "Usage: %s <source> <destination>\n", argv[0]);
@@ -41,7 +57,6 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     
-    len = stat.st_size;
     
     fd_out = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (fd_out == -1) {
@@ -49,8 +64,15 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     
+    len = stat.st_size;
+
     buf = mmap(NULL, MMAP_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, - 1, 0);
-    // do time measure for cp
+    
+    if (clock_gettime(CLOCK_MONOTONIC, &start_ts) == -1) {
+        perror("clock_gettime");
+        exit(EXIT_FAILURE);
+    }
+
     do {
         ret = read(fd_in, buf, BUF_SIZE);
         if (ret == -1) {
@@ -64,9 +86,13 @@ main(int argc, char **argv)
         }
         len -= ret;
     } while (len > 0);
-    // done
-    len = stat.st_size;
-    // do time measure for copy_file_range
+   
+    if (clock_gettime(CLOCK_MONOTONIC, &end_ts) == -1) {
+        perror("clock_gettime");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%lu.%03lus\n", diff(start_ts, end_ts).tv_sec, diff(start_ts, end_ts).tv_nsec / 1000000);
 /*    do {
         ret = copy_file_range(fd_in, NULL, fd_out, NULL, len, 0);
         if (ret == -1) {
