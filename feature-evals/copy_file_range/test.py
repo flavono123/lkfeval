@@ -1,32 +1,40 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #-*-coding:utf-8-*-
 
 import sys
 import os
+import subprocess
 import json
+
+def exec(cmd) :
+    fd = subprocess.Popen(cmd, shell=True,\
+            stdin=subprocess.PIPE,\
+            stdout=subprocess.PIPE,\
+            stderr=subprocess.PIPE)
+    return fd.stdout, fd.stderr
 
 # Generate random file for given size
 if len(sys.argv) != 2 or int (sys.argv[1]) % 512 :
     print ("Usage: test.py <size>, size should be a multiple of 512")
     exit(1)
 
+#stdout, stderr = exec(git rev-parse --show-toplevel)
+gitroot = str(os.system("git rev-parse --show-toplevel")) + "/"
+print(gitroot)
 if not os.path.isfile ("copy_file_range") :
-    os.chdir ("src")
-    os.system ("sudo make test")
-    os.system ("mv copy_file_range ../")
-    os.chdir ("..")
+    os.system("make copy_file_range")
 size = int (sys.argv[1])
 count = int (size / 512)
 
-fn_origin = "logs/origin_" + str (size) + ".txt"
-fn_copy = "logs/copy_" + str (size) + ".txt"
-fn_cfr = "logs/cfr_" + str (size) + ".txt"
-fn_time = "logs/time_" + str (size) + ".log"
-fn_result = "logs/result_" + str (size) + ".log"
+fn_origin = "origin_" + str (size) + ".txt"
+fn_copy = "copy_" + str (size) + ".txt"
+fn_cfr = "cfr_" + str (size) + ".txt"
+fn_time = gitroot + "logs/time_" + str (size) + ".log"
+fn_result = gitroot + "logs/copy_file_range_" + str (size) + ".log"
 
 os.system ("dd if=/dev/urandom of=" + fn_origin + " count=" + str(count) + " 2>/dev/null")
 
-test = 1000
+test = 11
 for i in range (test) :
     os.system ("( /usr/bin/time -f \"%C\t%U\t%S\t%P\t%e\" cp " + fn_origin + " " + fn_copy + " ) 2>>" + fn_time)
     os.system ("( /usr/bin/time -f \"%C\t%U\t%S\t%P\t%e\" ./copy_file_range " + fn_origin + " " + fn_cfr + " ) 2>>" + fn_time)
