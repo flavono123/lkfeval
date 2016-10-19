@@ -9,6 +9,9 @@
 
 #define __NR_copy_file_range 326
 
+#define MMAP_SIZE 139264 
+#define BUF_SIZE  131072
+
 static loff_t
 copy_file_range(int fd_in, loff_t *off_in, int fd_out, loff_t *off_out, size_t len, unsigned int flags)
 {
@@ -46,15 +49,15 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     
-    buf = mmap(NULL, 139264, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, - 1, 0);
+    buf = mmap(NULL, MMAP_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, - 1, 0);
     // do time measure for cp
     do {
-        ret = read(fd_in, buf, 131072);
+        ret = read(fd_in, buf, BUF_SIZE);
         if (ret == -1) {
             perror("read");
             exit(EXIT_FAILURE);
         }
-        ret = write(fd_out, buf, 131072);
+        ret = write(fd_out, buf, BUF_SIZE);
         if (ret == -1) {
             perror("write");
             exit(EXIT_FAILURE);
