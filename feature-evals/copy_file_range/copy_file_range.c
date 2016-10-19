@@ -5,8 +5,9 @@
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <unistd.h>
+#include <sys/mman.h>
 
-//#define __NR_copy_file_range 377
+#define __NR_copy_file_range 326
 
 static loff_t
 copy_file_range(int fd_in, loff_t *off_in, int fd_out, loff_t *off_out, size_t len, unsigned int flags)
@@ -20,6 +21,7 @@ main(int argc, char **argv)
     int fd_in, fd_out;
     struct stat stat;
     loff_t len, ret;
+    void *buf;
     
     if (argc != 3) {
         fprintf(stderr, "Usage: %s <source> <destination>\n", argv[0]);
@@ -44,7 +46,25 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     
+    buf = mmap(NULL, 139264, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, - 1, 0);
+    // do time measure for cp
     do {
+        ret = read(fd_in, buf, 131072);
+        if (ret == -1) {
+            perror("read");
+            exit(EXIT_FAILURE);
+        }
+        ret = write(fd_out, buf, 131072);
+        if (ret == -1) {
+            perror("write");
+            exit(EXIT_FAILURE);
+        }
+        len -= ret;
+    } while (len > 0);
+    // done
+    len = stat.st_size;
+    // do time measure for copy_file_range
+/*    do {
         ret = copy_file_range(fd_in, NULL, fd_out, NULL, len, 0);
         if (ret == -1) {
             perror("copy_file_range");
@@ -52,6 +72,8 @@ main(int argc, char **argv)
         }
         len -= ret;
     } while (len > 0);
+*/    // done copy_file_range
+
     close(fd_in);
     close(fd_out);
     exit(EXIT_SUCCESS);
