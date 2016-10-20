@@ -11,6 +11,8 @@
 #define MMAP_SIZE 139264 
 #define BUF_SIZE  128 * 1024
 
+#define SERVER_BUF_SIZE 65536
+
 #define MIN(A, B) \
        ({ __typeof__ (A) _A = (A); \
         __typeof__ (B) _B = (B); \
@@ -62,6 +64,10 @@ main(int argc, char **argv)
     
     len = stat.st_size;
 
+    if (posix_fadvise(fd_in, 0, 0, POSIX_FADV_SEQUENTIAL) == -1) {
+        perror("fadvise64");
+        exit(EXIT_FAILURE);
+    }
     buf = mmap(NULL, MMAP_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, - 1, 0);
     
     if (clock_gettime(CLOCK_MONOTONIC, &start_ts) == -1) {
