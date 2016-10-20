@@ -39,7 +39,7 @@ main(int argc, char **argv)
     int fd_in, fd_out;
     struct stat stat;
     loff_t len, ret;
-    void *buf;
+    void *buf = NULL;
     struct timespec start_ts, end_ts;
     
     if (argc != 3) {
@@ -69,6 +69,16 @@ main(int argc, char **argv)
         perror("fadvise64");
         exit(EXIT_FAILURE);
     }
+    
+    // on Server mmap
+    // But page also readable and writable ...??
+    //buf = mmap(NULL, SERVER_MMAP_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE, - 1, 0);
+    //if (buf == NULL) {
+    //    perror("mmap");
+    //    exit(EXIT_FAILURE);
+    //}
+    // Not works... read cannot read that (Bad address)
+    // on VM mmap
     buf = mmap(NULL, MMAP_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, - 1, 0);
     
     if (clock_gettime(CLOCK_MONOTONIC, &start_ts) == -1) {
@@ -77,7 +87,10 @@ main(int argc, char **argv)
     }
 
     do {
-        ret = read(fd_in, buf, MIN(UINTMAX_MAX, BUF_SIZE));
+        // on Server read
+        ret = read(fd_in, buf, MIN(UINTMAX_MAX, SERVER_BUF_SIZE));
+        // on VM read
+        //ret = read(fd_in, buf, MIN(UINTMAX_MAX, BUF_SIZE));
         if (ret == -1) {
             perror("read");
             exit(EXIT_FAILURE);
