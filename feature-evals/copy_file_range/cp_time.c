@@ -6,9 +6,15 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <time.h>
+#include <stdint.h>
 
 #define MMAP_SIZE 139264 
-#define BUF_SIZE  131072
+#define BUF_SIZE  128 * 1024
+
+#define MIN(A, B) \
+       ({ __typeof__ (A) _A = (A); \
+        __typeof__ (B) _B = (B); \
+        _A < _B ? _A : _B; })
 
 struct timespec 
 diff(struct timespec start, struct timespec end) 
@@ -64,12 +70,12 @@ main(int argc, char **argv)
     }
 
     do {
-        ret = read(fd_in, buf, BUF_SIZE);
+        ret = read(fd_in, buf, MIN(UINTMAX_MAX, BUF_SIZE));
         if (ret == -1) {
             perror("read");
             exit(EXIT_FAILURE);
         }
-        ret = write(fd_out, buf, BUF_SIZE);
+        ret = write(fd_out, buf, ret);
         if (ret == -1) {
             perror("write");
             exit(EXIT_FAILURE);
