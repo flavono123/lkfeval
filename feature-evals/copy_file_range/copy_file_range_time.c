@@ -7,11 +7,21 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <time.h>
+#include <stdint.h>
 
 #define __NR_copy_file_range 326
 
+#define SERVER_MMAP_SIZE 8463488
+#define SERVER_BUF_SIZE 65536
+
 #define MMAP_SIZE 139264 
 #define BUF_SIZE  131072
+
+#define MIN(A, B) \
+    ({ __typeof__ (A) _A = (A); \
+    __typeof__ (B) _B = (B); \
+    _A < _B ? _A : _B; })
+
 
 struct timespec 
 diff(struct timespec start, struct timespec end) 
