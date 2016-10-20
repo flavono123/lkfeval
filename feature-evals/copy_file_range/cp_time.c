@@ -11,6 +11,7 @@
 #define MMAP_SIZE 139264 
 #define BUF_SIZE  128 * 1024
 
+#define SERVER_MMAP_SIZE 8463488
 #define SERVER_BUF_SIZE 65536
 
 #define MIN(A, B) \
