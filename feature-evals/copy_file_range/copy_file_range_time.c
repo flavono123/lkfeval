@@ -78,13 +78,18 @@ main(int argc, char **argv)
 
     buf = mmap(NULL, MMAP_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, - 1, 0);
     
+    if (posix_fadvise(fd_in, 0, 0, POSIX_FADV_SEQUENTIAL) == -1) {
+        perror("fadvise64");
+        exit(EXIT_FAILURE);
+    }
+    
     if (clock_gettime(CLOCK_MONOTONIC, &start_ts) == -1) {
         perror("clock_gettime");
         exit(EXIT_FAILURE);
     }
 
      do {
-        ret = copy_file_range(fd_in, NULL, fd_out, NULL, len, 0);
+        ret = copy_file_range(fd_in, NULL, fd_out, NULL, SERVER_BUF_SIZE, 0);
         if (ret == -1) {
             perror("copy_file_range");
             exit(EXIT_FAILURE);
