@@ -174,6 +174,8 @@ compile_script_args="-v $version -c $config -e $extraversion"
 guest_user='root'
 guest_passwd='root'
 
+
+echo "kernel making..."
 #
 if ! vmrun -gu $guest_user -gp $guest_passwd runProgramInGuest \
 	"$virtual_machine" "$compile_script" $compile_script_args; then
@@ -181,9 +183,21 @@ if ! vmrun -gu $guest_user -gp $guest_passwd runProgramInGuest \
 	exit 72
 fi
 
+echo "kernel update..."
+
+update_script=$guest_shared_dir_linux/core/scripts/kupdate.sh
+update_script_args="${version}-${extraversion}"
+
+
+if ! vmrun -gu $guest_user -gp $guest_passwd runProgramInGuest \
+	"$virtual_machine" "$update_script" $update_script_args; then
+	echo "failed : $compile_script $compile_script_args compile script execution."
+fi
+
+echo "reboot vm..."
 vmrun reset "$virtual_machine"
 
-
+echo "evaluation start : $eval_script"
 #feature evaluation (maybe in shared folder) TODO
 feature_eval_script="$guest_shared_dir_linux/feature-evals/$eval_script"
 #feature_eval_script_args="$guest_shared_dir_linux/feature_evaluation.test"

@@ -81,7 +81,7 @@ for i in range(img_cnt):
 		configs_string += k+'='+v+','
 	configs_string = configs_string[:-1]
 	print(kfe_path+' -v '+ feature_imgs[i]['version']+' -c '+configs_string + ' -e '+eval_fname+'i')
-	shell_command(kfe_path+' -v '+version+' -c '+configs_string+' -e '+eval_fname+'i'+' -s '+eval_script)
+	shell_command(kfe_path+' -v '+version+' -c '+configs_string+' -e '+eval_fname+str(i)+' -s '+eval_script)
 
 
 
