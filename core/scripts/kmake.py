@@ -106,9 +106,10 @@ shell_command("git checkout v"+k_version)
 #TODO maybe initial kernel repo doesn't have .config
 print("configureing...")
 #shell_command("yes '' | make localmodconfig") #TODO require default configㅑ
-shell_command("yes '' | make defconfig") 
+#shell_command("yes '' | make defconfig") 
+#must default .config exist.
 shell_command("yes '' | make olddefconfig")
-shell_command("yes '' | make localmodconfig") #특히 vmware관련된게 있는듯
+#shell_command("yes '' | make localmodconfig") #특히 vmware관련된게 있는듯
 #shell_command("yes '' | make oldconfig") #엔터 자동입력으로 하면 localmodeconfig가 oldconfig로 넘어가는 중에 에러를 뱉으며 죽는다. 때문에 oldconfig 디폴트값으로 다시 설정해줘야함
 '''
 config_keys = k_configs.keys()
@@ -129,13 +130,14 @@ for k,v in k_configs.items() :
 		shell_command('./scripts/config --set-val %s %s' % (k, v))
 
 print("kernel extra version : ", k_extra)
-#shell_command('sed -i "s/EXTRAVERSION =.*/EXTRAVERSION = %s/g" Makefile' % k_extra)
-#make에 EXTRAVERSION=xxx 인자로 해서 줄 수있는듯, 그러면 소스변경이 없으니 stash도 필요없겠지?
+shell_command('sed -i "s/EXTRAVERSION =.*/EXTRAVERSION = %s/g" Makefile' % k_extra)
 
-print("make EXTRAVERSION=-%s" % k_extra)
-shell_command("make EXTRAVERSION=-%s" % k_extra)
-print("make modules")
-shell_command("make modules")
+#print("make EXTRAVERSION=-%s" % k_extra)
+#shell_command("make EXTRAVERSION=-%s" % k_extra)
+#print("make modules")
+#shell_command("make modules")
+print("make")
+shell_command("make")
 print("make modules_install")
 shell_command("make modules_install")
 print("make install")

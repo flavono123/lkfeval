@@ -1,3 +1,5 @@
 feature_eval.conf
 *.swp
 .DS_Store
+logs/
+.idea/
