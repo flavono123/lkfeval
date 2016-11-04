@@ -33,10 +33,21 @@ if len(sys.argv) < 1 :
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
-os.chdir(dname+'/../..') #project root dir
+project_root = dname+'/../..'
+#os.chdir(dname+'/../..') #project root dir
 
-eval_fname = sys.argv[1]
-conf_path = 'core/scripts/feature_eval.conf' 
+
+vmx = ''
+rsa_key = ''
+eval_fname = ''
+try:
+	vmx = sys.argv[1]
+	rsa_key = sys.argv[2]
+	eval_fname = sys.argv[3]
+except IndexError:
+	print('missing required arguments', file=sys.stderr)
+	exit(1)
+conf_path = project_root+'/core/scripts/feature_eval.conf'
 #TODO conf_path를 실행 디렉토리랑 상관없이 읽을 수 있도록 해야함.
 
 
@@ -61,27 +72,28 @@ except IOError:
 	eprint(conf_path+' is not found.')
 	exit(1)
 
+feature = ''
 try:
 	feature = features[eval_fname]
 except KeyError :
 	eprint(eval_fname+" information does not exists in %s." % conf_path)
+	exit(1)
 
+print(feature)
 eval_script = feature['evaluation_script']
 img_cnt = feature['image_cnt']
 feature_imgs = feature['images']
 
-scripts_path = 'core/scripts/'
-kfe_path = scripts_path+'kfeature-eval.sh'
+scripts_path = project_root+'/core/scripts/'
+kfe_path = scripts_path+'kfeature-eval.py'
 
 for i in range(img_cnt):
 	version = feature_imgs[i]['version']
 	configs = feature_imgs[i]['config']
-	configs_string = ''
-	for k, v in configs.items():
-		configs_string += k+'='+v+','
-	configs_string = configs_string[:-1]
-	print(kfe_path+' -v '+ feature_imgs[i]['version']+' -c '+configs_string + ' -e '+eval_fname+'i')
-	shell_command(kfe_path+' -v '+version+' -c '+configs_string+' -e '+eval_fname+str(i)+' -s '+eval_script)
+	configs_string = ' '.join([k+'='+v for k, v in configs.items()])
+	command = '{0} -c {1} -e "{2}" "{3}" "{4}" "{5}" "{6}"'.format(kfe_path, configs_string, eval_fname+str(i), vmx, rsa_key, version, eval_script)
+	print(command)
+	shell_command(command)
 
 
 

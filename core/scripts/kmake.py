@@ -4,9 +4,6 @@ import sys
 import os
 
 #for test
-f = open('/home/bigs/testb', 'a+')
-sys.stderr = f
-sys.stdout = f
 
 required_ops = ["-v"]
 k_version = ''
@@ -69,6 +66,10 @@ for arg in sys.argv :
 		k_repo = arg
 	pre_arg = arg
 
+if not k_extra.startswith('-'):
+	k_extra = '-'+k_extra
+k_extra = k_extra.replace('_','-')
+
 print("args : ")
 print("k_version : ", k_version)
 print("k_extra : ", k_extra)
@@ -81,9 +82,10 @@ print("krepo : ", k_repo)
 #shell_command("yes '' | apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc")
 
 #if git does not exist
-shell_command("command -v git", "failed : git does not exist")
+shell_command("command -v git > /dev/null", "failed : git does not exist")
 
-
+shell_command("git config --global user.email lkfes@lkfes.org")
+shell_command("git config --global user.name lkfes")
 
 #if src does not exist, git clone
 if not os.path.isdir(k_src_dir) :
@@ -91,7 +93,10 @@ if not os.path.isdir(k_src_dir) :
 	print("git clone "+k_repo)
 	shell_command("git clone "+k_repo+" "+k_src_dir)
 
+print("kerenl src exists. : {0}".format(k_src_dir))
 
+print(os.getcwd())
+shell_command('cp defconfig {0}/.config'.format(k_src_dir))
 
 print("cd "+k_src_dir)
 os.chdir(k_src_dir)
