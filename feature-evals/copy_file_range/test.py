@@ -18,7 +18,7 @@ if len(sys.argv) != 2 or int (sys.argv[1]) % 512 :
 #print(gitroot)
 if not os.path.isfile ("copy_file_range_time") or not os.path.isfile ("cp_time"):
     os.system("make copy_file_range_time cp_time")
-size = 1073741824 * 1
+size = 1073741824 * 3
 count = int (size / 1024)
 
 fn_origin = "origin.txt"
