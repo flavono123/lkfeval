@@ -78,6 +78,9 @@ while 1:
         elif (value[0] == "sys"):
             dontneed_sys += float(value[1])
 
+fn_time.close()
+os.system("rm " + fn_time)
+
 free_records /= (test - 1)
 free_usr /= (test - 1)
 free_sys /= (test - 1)
