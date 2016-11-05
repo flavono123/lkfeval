@@ -108,7 +108,7 @@ main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    printf("%lu.%03lus\n", diff(start_ts, end_ts).tv_sec, diff(start_ts, end_ts).tv_nsec / 1000000);
+    printf("cp\t%lu.%03lu\n", diff(start_ts, end_ts).tv_sec, diff(start_ts, end_ts).tv_nsec / 1000000);
 
     close(fd_in);
     close(fd_out);

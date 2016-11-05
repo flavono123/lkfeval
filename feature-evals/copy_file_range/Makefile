@@ -1,4 +1,4 @@
-#CFLAGS += -pg
+CFLAGS += -pg
 LDFLAGS += -lrt
 
 SRCS := copy_file_range_time.c cp_time.c
