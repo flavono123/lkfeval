@@ -1,110 +1,88 @@
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-sh: 1: ./ebizzy_madvise: not found
-MADV_FREE_records/s	13404 
+MADV_FREE_records/s	10437 
 MADV_FREE_real	10.00 
-MADV_FREE_user	 9.25 
-MADV_FREE_sys 	 0.37 
-MADV_DONTNEED_records/s	8402 
-MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.37 
-MADV_DONTNEED_sys 	 6.56 
-MADV_FREE_records/s	12824 
-MADV_FREE_real	11.00 
-MADV_FREE_user	 9.56 
-MADV_FREE_sys 	 0.37 
-MADV_DONTNEED_records/s	8242 
-MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.33 
-MADV_DONTNEED_sys 	 6.61 
-MADV_FREE_records/s	10718 
-MADV_FREE_real	10.00 
-MADV_FREE_user	 9.52 
-MADV_FREE_sys 	 0.39 
-MADV_DONTNEED_records/s	6695 
-MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.61 
-MADV_DONTNEED_sys 	 6.30 
-MADV_FREE_records/s	9338 
-MADV_FREE_real	10.00 
-MADV_FREE_user	 9.43 
-MADV_FREE_sys 	 0.46 
-MADV_DONTNEED_records/s	6963 
-MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.57 
-MADV_DONTNEED_sys 	 6.35 
-MADV_FREE_records/s	13168 
-MADV_FREE_real	10.00 
-MADV_FREE_user	 9.48 
-MADV_FREE_sys 	 0.40 
-MADV_DONTNEED_records/s	6280 
-MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.58 
-MADV_DONTNEED_sys 	 6.32 
-MADV_FREE_records/s	11409 
-MADV_FREE_real	10.00 
-MADV_FREE_user	 9.51 
-MADV_FREE_sys 	 0.40 
-MADV_DONTNEED_records/s	7291 
-MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.54 
-MADV_DONTNEED_sys 	 6.39 
-MADV_FREE_records/s	13909 
-MADV_FREE_real	10.00 
-MADV_FREE_user	 9.53 
-MADV_FREE_sys 	 0.41 
-MADV_DONTNEED_records/s	7903 
+MADV_FREE_user	 9.17 
+MADV_FREE_sys 	 0.35 
+MADV_DONTNEED_records/s	6463 
 MADV_DONTNEED_real	10.00 
 MADV_DONTNEED_user	 3.50 
-MADV_DONTNEED_sys 	 6.43 
-MADV_FREE_records/s	11966 
+MADV_DONTNEED_sys 	 6.41 
+MADV_FREE_records/s	11152 
 MADV_FREE_real	10.00 
-MADV_FREE_user	 9.43 
-MADV_FREE_sys 	 0.40 
-MADV_DONTNEED_records/s	7433 
+MADV_FREE_user	 9.49 
+MADV_FREE_sys 	 0.42 
+MADV_DONTNEED_records/s	6127 
+MADV_DONTNEED_real	10.00 
+MADV_DONTNEED_user	 3.63 
+MADV_DONTNEED_sys 	 6.29 
+MADV_FREE_records/s	10876 
+MADV_FREE_real	10.00 
+MADV_FREE_user	 9.58 
+MADV_FREE_sys 	 0.35 
+MADV_DONTNEED_records/s	6591 
+MADV_DONTNEED_real	10.00 
+MADV_DONTNEED_user	 3.63 
+MADV_DONTNEED_sys 	 6.29 
+MADV_FREE_records/s	10812 
+MADV_FREE_real	10.00 
+MADV_FREE_user	 9.50 
+MADV_FREE_sys 	 0.38 
+MADV_DONTNEED_records/s	6500 
 MADV_DONTNEED_real	10.00 
 MADV_DONTNEED_user	 3.54 
-MADV_DONTNEED_sys 	 6.33 
-MADV_FREE_records/s	14014 
+MADV_DONTNEED_sys 	 6.37 
+MADV_FREE_records/s	10538 
 MADV_FREE_real	10.00 
-MADV_FREE_user	 9.52 
+MADV_FREE_user	 9.53 
+MADV_FREE_sys 	 0.39 
+MADV_DONTNEED_records/s	6233 
+MADV_DONTNEED_real	10.00 
+MADV_DONTNEED_user	 3.44 
+MADV_DONTNEED_sys 	 6.45 
+MADV_FREE_records/s	11027 
+MADV_FREE_real	10.00 
+MADV_FREE_user	 9.49 
 MADV_FREE_sys 	 0.42 
-MADV_DONTNEED_records/s	8251 
+MADV_DONTNEED_records/s	7189 
 MADV_DONTNEED_real	10.00 
 MADV_DONTNEED_user	 3.40 
-MADV_DONTNEED_sys 	 6.52 
-MADV_FREE_records/s	13461 
+MADV_DONTNEED_sys 	 6.53 
+MADV_FREE_records/s	12541 
 MADV_FREE_real	10.00 
 MADV_FREE_user	 9.51 
-MADV_FREE_sys 	 0.42 
-MADV_DONTNEED_records/s	7375 
+MADV_FREE_sys 	 0.37 
+MADV_DONTNEED_records/s	7141 
 MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.56 
-MADV_DONTNEED_sys 	 6.36 
-MADV_FREE_records/s	11409 
+MADV_DONTNEED_user	 3.48 
+MADV_DONTNEED_sys 	 6.44 
+MADV_FREE_records/s	11324 
 MADV_FREE_real	10.00 
-MADV_FREE_user	 8.89 
-MADV_FREE_sys 	 0.34 
-MADV_DONTNEED_records/s	6359 
+MADV_FREE_user	 9.53 
+MADV_FREE_sys 	 0.39 
+MADV_DONTNEED_records/s	6164 
 MADV_DONTNEED_real	10.00 
-MADV_DONTNEED_user	 3.38 
-MADV_DONTNEED_sys 	 6.23 
+MADV_DONTNEED_user	 3.50 
+MADV_DONTNEED_sys 	 6.42 
+MADV_FREE_records/s	10947 
+MADV_FREE_real	10.00 
+MADV_FREE_user	 9.49 
+MADV_FREE_sys 	 0.41 
+MADV_DONTNEED_records/s	6528 
+MADV_DONTNEED_real	10.00 
+MADV_DONTNEED_user	 3.55 
+MADV_DONTNEED_sys 	 6.37 
+MADV_FREE_records/s	10601 
+MADV_FREE_real	10.00 
+MADV_FREE_user	 9.47 
+MADV_FREE_sys 	 0.41 
+MADV_DONTNEED_records/s	6158 
+MADV_DONTNEED_real	10.00 
+MADV_DONTNEED_user	 3.57 
+MADV_DONTNEED_sys 	 6.27 
+MADV_FREE_records/s	12793 
+MADV_FREE_real	10.00 
+MADV_FREE_user	 9.57 
+MADV_FREE_sys 	 0.35 
+MADV_DONTNEED_records/s	6888 
+MADV_DONTNEED_real	10.00 
+MADV_DONTNEED_user	 3.60 
+MADV_DONTNEED_sys 	 6.32 
