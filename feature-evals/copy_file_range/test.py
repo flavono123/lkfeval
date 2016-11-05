@@ -35,13 +35,11 @@ os.system ("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
 if os.path.isfile(fn_time):
     os.system("rm " + fn_time)
 
+os.system("touch " + fn_time)
+os.system("chmod 755 " + fn_time)
+
 test = 11
 for i in range (test) :
-    if i == 0 :
-        print ("CPU warming up!")
-    else :
-        print ("Testing copy " + str(size / 1024 / 1024 / 1024) + "G file (%d/10)" % i )
-
     os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
     os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
     os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
@@ -60,7 +58,8 @@ for i in range (test) :
 
 os.system("rm " + fn_origin)
 
-f_time = open (fn_time, "r+")
+f_time = open(fn_time, "r+")
+os.system("rm " + fn_time)
 
 avg_cp = 0.0
 avg_cfr = 0.0
@@ -72,10 +71,12 @@ while 1:
     if (result[0] == "cp"): avg_cp += float(result[1])
     elif (result[0] == "cfr"): avg_cfr += float(result[1])
 
+f_time.close ()
+os.system("rm ")
+
 avg_cp /= (test - 1)
 avg_cfr /= (test - 1)
 
-f_time.write ("avg cp time: %.3f\n" % avg_cp)
-f_time.write ("avg cfr time: %.3f\n" % avg_cfr)
+os.system("echo \"cp\t%5.3f\"" % avg_cp)
+os.system("echo \"copy_file_range\t%5.3f\"" % avg_cfr)
 
-f_time.close ()
