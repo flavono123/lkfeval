@@ -22,10 +22,8 @@ def sizeof_fmt(num):
             return "%3.1f%s" % (num, unit)
         num /= 1024.0
 
-buffercaches = ["3.9G","400M", "50K"]
-tot = 0.0
+proc = exec_cmd("cat /proc/meminfo")
+output = proc.stdout.read()
+field = output.split()
 
-for bc in buffercaches:
-    tot += caltobyte(bc)
-print sizeof_fmt(tot)
-
+print field
