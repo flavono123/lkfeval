@@ -9,7 +9,7 @@
 
 #define tv_to_sec(tv) tv.tv_sec + tv.tv_usec/1e6
 
-static unsigned int threads = 10;
+static unsigned int threads = 100;
 static unsigned int seconds = 10;
 static time_t start_time;
 static volatile int threads_go;
