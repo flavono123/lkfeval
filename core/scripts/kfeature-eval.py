@@ -45,6 +45,16 @@ class Remote_ssh:
         return shell_command('scp -i {0} -P {1} "{2}" "{3}@{4}:{5}"'
                              .format(self._ssh_key, self._port, frm, self._user, self._addr, to))
 
+def get_vm_ipvm(vm):
+	popen_guest_ip = Popen(['vmrun', 'getGuestIPAddress', vm], env=os.environ.copy() ,stdout=PIPE)
+	
+	out, err = popen_guest_ip.communicate()
+
+	if popen_guest_ip.returncode:
+		print("Failed : Get gueste ip.", file=sys.stderr)
+		exit(1)
+	return out.decode('utf-8').strip()
+
 parser = argparse.ArgumentParser(description='feature evaluation tools : make a kernel image and run a feature evaluation script')
 
 #required arguments
@@ -97,18 +107,7 @@ if not os.path.isfile(args.vm):
 
 shell_command('vmrun start "{0}"'.format(args.vm))
 
-popen_guest_ip = Popen(['vmrun', 'getGuestIPAddress', args.vm], env=os.environ.copy() ,stdout=PIPE)
-
-out, err = popen_guest_ip.communicate()
-
-if popen_guest_ip.returncode:
-	print("Get gueste ip : "+err, file=sys.stderr)
-	exit(1)
-
-guest_ip = out.decode('utf-8').strip()
-
-print(os.getcwd())
-print("Guest IP : {0}".format(guest_ip))
+guest_ip = get_vm_ipvm(args.vm)
 
 guest = Remote_ssh(guest_ip, args.ssh_key, user=args.guest_user)
 
@@ -129,13 +128,18 @@ compile_script_args = '-v "{0}" -c "{1}" -e "{2}"'.format(args.k_version, ",".jo
 guest.shell_command('cd {0};{1} {2}'.format(args.working_dir, compile_script, compile_script_args))
 
 update_script = args.working_dir+'/kupdate.sh'
-update_script_args = '{0}{1}+'.format(args.k_version, args.extraversion) #+ suffix is attached because of git change
+k_version = args.k_version
+if k_version.count('.') == 1 :
+	k_version = k_version+'.0'	
+update_script_args = '{0}{1}+'.format(k_version, args.extraversion) #+ suffix is attached because of git change
 guest.shell_command('cd {0};{1} {2}'.format(args.working_dir, update_script, update_script_args))
 
 print("reboot guest..")
 shell_command('vmrun reset "{0}"'.format(args.vm))
 
-log_dir = args.k_version+args.extraversion
+guest_ip = get_vm_ipvm(args.vm)
+
+log_dir = k_version+args.extraversion
 guest.shell_command('mkdir -p {0}'.format(args.working_dir+'/'+log_dir))
 shell_command('mkdir -p {0}'.format(script_dir()+'/../../logs/'+log_dir))
 
@@ -149,4 +153,24 @@ for script in args.eval_scripts:
 	guest.download(log_file, script_dir()+'/../../logs/'+log_dir)
 
 guest.shell_command('rm -rf '+args.working_dir)
+
+b_report = input('Want to report result of feature evaluation to LKFES-report system?(Y/n)')
+
+if b_report != 'n':
+	import requests
+	reporter = input('your name? ')
+	popen_uname = Popen(['uname', '-a'], stdout=PIPE)
+	out, err = popen_uname.communicate()
+	sw_specs = out.decode('utf-8').strip()
+	hw_specs = "hw spec"
+	url = '127.0.0.1:8000/post'
+	data = {'title' : '', 'reporter': reporter, 'hw_spec':hw_spec, 'sw_spec' : sw_specs }
+	files = {}
+	requests.post()
+
+	
+
+
+
+
 
