@@ -49,12 +49,12 @@ def buffercache():
     return float(field[10]), float(field[13])
 
 # Make loop block device as file
+exec_cmd("rm log")
 exec_cmd("dd if=/dev/zero of=lbd.img bs=1k count=1536000 > log 2>&1")
-exec_cmd("losetup /dev/loop1 lbd.img > log 2>&1")
-exec_cmd("mkfs -t ext4 /dev/loop1 > log 2>&1")
-if not os.path.isdir("/mnt/loop"):
-    os.mkdir("/mnt/loop")
-exec_cmd("mount -t ext4 /dev/loop1 /mnt/loop > log 2>&1")
+exec_cmd("losetup /dev/loop1 lbd.img >> log 2>&1")
+exec_cmd("mkfs -t ext4 /dev/loop1 >> log 2>&1")
+os.mkdir("/mnt/loop")
+exec_cmd("mount -t ext4 /dev/loop1 /mnt/loop >> log 2>&1")
 
 # System set; drop page, cache and , and set the ratio of write back max as possible
 exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
@@ -73,7 +73,7 @@ write_iops = 0
 write_buffer = 0.0
 write_cache =0.0
 
-test = 2
+test = 4
 
 # Test start
 for i in range (test) :
@@ -116,3 +116,8 @@ row_format = "{:>10}" * (len(col_list) + 1)
 print row_format.format("", *col_list)
 for row, data in zip(row_list, table_data):
     print row_format.format(row, *data)
+
+exec_cmd("umount /mnt/loop >> log 2>&1")
+exec_cmd("rm -rf /mnt/loop >> log 2>&1")
+exec_cmd("losetup -d /dev/loop1 >> log 2>&1")
+exec_cmd("rm lbd.img >> log 2>&1")
