@@ -80,20 +80,34 @@ except KeyError :
 	exit(1)
 
 print(feature)
-eval_script = feature['evaluation_script']
-img_cnt = feature['image_cnt']
-feature_imgs = feature['images']
+eval_dir = feature['evaluation_dir']
+eval_script = feature['evaluation_script_name']
+before_img = feature['before']
+after_img = feature['after']
 
 scripts_path = project_root+'/core/scripts/'
 kfe_path = scripts_path+'kfeature-eval.py'
 
-for i in range(img_cnt):
-	version = feature_imgs[i]['version']
-	configs = feature_imgs[i]['config']
-	configs_string = ' '.join([k+'='+v for k, v in configs.items()])
-	command = '{0} -c {1} -e "{2}" "{3}" "{4}" "{5}" "{6}"'.format(kfe_path, configs_string, eval_fname+str(i), vmx, rsa_key, version, eval_script)
-	print(command)
-	shell_command(command)
+version = before_img['version']
+configs = before_img['config']
+configs_string = ''
+if configs:
+	configs_string = '-c '+' '.join([k+'='+v for k, v in configs.items()])
+command = '{0} {1} -e "{2}" "{3}" "{4}" "{5}" "{6}" "{7}" "{8}"'.format(kfe_path, configs_string,
+							eval_fname+'-before', vmx, rsa_key, eval_fname, version, eval_dir+'/'+eval_script, 'before.log')
+print(command)
+shell_command(command)
+
+
+version = after_img['version']
+configs = after_img['config']
+configs_string = ''
+if configs:
+	configs_string = '-c '+' '.join([k+'='+v for k, v in configs.items()])
+command = '{0} {1} -e "{2}" "{3}" "{4}" "{5}" "{6}" "{7}" "{8}"'.format(kfe_path, configs_string,
+							eval_fname+'-after', vmx, rsa_key, eval_fname, version, eval_dir+'/'+eval_script, 'after.log')
+print(command)
+shell_command(command)
 
 
 

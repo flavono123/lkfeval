@@ -5,6 +5,10 @@ import sys
 import os
 import json
 
+def script_dir():
+    return sys.path[0]
+
+BASE_EVAL_PATH = '/'.join(script_dir().split('/')[:-2])+"/feature-evals"
 
 def print_help():
     print("print_help")
@@ -25,29 +29,47 @@ def shell_command(command, error_str='', print_on_error=True, exit_on_error=True
     return ret  
 
 def add_feature(features, fname):
-	eval_script = input('feature evalustaion script : ') #TODO check if it exists
-	img_cnt = int(input('the number of kernel images : ')) 
-	imgs = []
-	for i in range(img_cnt) :
-		img = dict()
-		img['version'] = input('image[%d] - kerenl version : ' % i)
-		img['config'] = dict()
-		print('image[%d] : config info (ctrl+D to finish)' % i)
-		j=0
-		while True :
-			try:
-				config_name = input('image [%d] - kernel config[%d] name : ' % (i, j)) 
-				config_value = input('image [%d] - kernel config[%d] value : ' % (i, j)) 
-				img['config'][config_name] = config_value
-			except EOFError:
-				print('')
-				break
+	eval_dir = input('feature evauation dir : ') #상대경로일 경우 feature_eval에서
+	if not eval_dir.startswith('/'):
+		eval_dir = BASE_EVAL_PATH+'/'+eval_dir
+	eval_script_name = input('feature evaluation script name : ') #TODO check if it exists
+	print('--before evaluated kernel image--')
+	before = dict()
+	before['version'] = input('kerenl version : ')
+	before['config'] = dict()
+	j=0
+	print('kernel configs(Crtl+D to stop) : ')
+	while True :
+		try:
+			config_name = input('kernel config[%d] name : ' % j)
+			config_value = input('kernel config[%d] value : ' % j)
+			before['config'][config_name] = config_value
 			j += 1
-		imgs.append(img)
+		except EOFError:
+			break
+
+	print('--after evaluated kernel image--')
+	after = dict()
+	if input('same as before?(y/N)').lower() != 'y':
+		after['version'] = input('kerenl version : ')
+		after['config'] = dict()
+		j=0
+		print('kernel configs(Crtl+D to stop) : ')
+		while True:
+			try:
+				config_name = input('kernel config[%d] name : ' % j)
+				config_value = input('kernel config[%d] value : ' % j)
+				after['config'][config_name] = config_value
+				j += 1
+			except EOFError:
+				break
+	else:
+		after = before
 	feature = dict()
-	feature['evaluation_script'] = eval_script
-	feature['image_cnt'] = img_cnt
-	feature['images'] = imgs
+	feature['evaluation_dir'] = eval_dir
+	feature['evaluation_script_name'] = eval_script_name
+	feature['before'] = before
+	feature['after'] = after
 	features[fname] = feature
 				
 
@@ -60,16 +82,23 @@ def show_feature(features, fname):
 	except KeyError:
 		eprint('feature not found.')
 		exit(1)
-	print('feature name : ', fname)
-	print('\tfeature evaluation script : ', feature['evaluation_script'])
-	print('\tthe count of kernel images : ', feature['image_cnt'])
-	feature_imgs = feature['images']
-	for i in range(feature['image_cnt']):
-		print('\timage[%d] - versoin : %s' % (i, feature_imgs[i]['version']))
-		print('\timage[%d] - configs : ' % i)
-		f_configs = feature_imgs[i]['config']
-		for k,v in f_configs.items():
-			print('\t '+k+'='+str(v))
+	print('\tfeature evaluation script dir : '+feature['evaluation_dir'])
+	print('\tfeature evaluation script name : '+feature['evaluation_script_name'])
+
+	print('\tbefore : ')
+	before = feature['before']
+	after = feature['after']
+	print('\t\tkernel versoin : %s' % before['version'])
+	print('\t\tkernel configs : ')
+	f_configs = before['config']
+	for k,v in f_configs.items():
+		print('\t\t '+k+'='+str(v))
+	print('\tafter : ')
+	print('\t\tkernel versoin : %s' % after['version'])
+	print('\t\tkernel configs : ')
+	f_configs = after['config']
+	for k, v in f_configs.items():
+		print('\t\t ' + k + '=' + str(v))
 
 def list_feature(features, opt = '--default'):
 	opts = ['--details', '--default']

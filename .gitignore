@@ -1,5 +1,6 @@
 feature_eval.conf
 *.swp
 .DS_Store
+.last_evaluated_kernel
 logs/
 .idea/
