@@ -3,8 +3,14 @@
 
 import sys
 import os
-import subprocess # still not adjusted
-import json
+import subprocess
+
+def exec_cmd(cmd):
+    return subprocess.Popen(cmd,
+                            shell=True,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
 
 # Generate random file for given size
 if not os.path.isfile ("copy_file_range_time") or not os.path.isfile ("cp_time"):
@@ -18,31 +24,31 @@ fn_cfr = "cfr.txt"
 fn_time = "time.log"
 fn_result = "copy_file_range_.log"
 
-os.system ("dd if=/dev/zero of=" + fn_origin + " bs=1k count=" + str(count) + " 2>/dev/null")
+exec_cmd("dd if=/dev/zero of=" + fn_origin + " bs=1k count=" + str(count) + " 2>/dev/null")
 
 # System set
-os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-os.system ("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
+exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+exec_cmd("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
 
 test = 11
 for i in range (test) :
-    os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
 
-    os.system ("echo cp >> " + fn_time + " 2>&1")
-    os.system ("./cp_time " + fn_origin + " " + fn_copy + " >> " + fn_time + " 2>&1")
-    os.system ("diff " + fn_origin + " " + fn_copy)
-    os.system ("rm " + fn_copy)
+    exec_cmd("echo cp >> " + fn_time + " 2>&1")
+    exec_cmd("./cp_time " + fn_origin + " " + fn_copy + " >> " + fn_time + " 2>&1")
+    exec_cmd("diff " + fn_origin + " " + fn_copy)
+    exec_cmd("rm " + fn_copy)
 
-    os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    os.system ("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
 
-    os.system ("echo copy_file_range >> " + fn_time + " 2>&1")
-    os.system ("./copy_file_range_time " + fn_origin + " " + fn_cfr + " >> " + fn_time + " 2>&1")
-    os.system ("diff " + fn_origin + " " + fn_cfr)
-    os.system ("rm " + fn_cfr)
+    exec_cmd("echo copy_file_range >> " + fn_time + " 2>&1")
+    exec_cmd("./copy_file_range_time " + fn_origin + " " + fn_cfr + " >> " + fn_time + " 2>&1")
+    exec_cmd("diff " + fn_origin + " " + fn_cfr)
+    exec_cmd("rm " + fn_cfr)
 
     if i == 0 :
         print ("CPU warming up!")
