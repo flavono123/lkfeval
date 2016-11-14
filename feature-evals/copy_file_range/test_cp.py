@@ -27,7 +27,8 @@ def copy_test(test):
     exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
     exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
     cmd = set_copy_cmd(test)
-    return exec_cmd(cmd)
+    result = exec_cmd(cmd)
+    return float(result.stdout.read().strip())
 
 
 # Generate random file for given size
