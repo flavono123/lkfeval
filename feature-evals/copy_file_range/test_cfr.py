@@ -27,7 +27,8 @@ def copy_test(test):
     exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
     exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
     cmd = set_copy_cmd(test)
-    return exec_cmd(cmd)
+    result = exec_cmd(cmd)
+    return float(result.stdout.read().strip())
 
 
 # Generate random file for given size
@@ -51,7 +52,7 @@ avg_copy_file_range = 0.0
 test = 11
 
 for i in range (test) :
-    avg_copy_file_range = copy_test("copy_file_range")
+    avg_copy_file_range += copy_test("copy_file_range")
     exec_cmd("rm " + fn_cfr)
 
 exec_cmd("make clean")
