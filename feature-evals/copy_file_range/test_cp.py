@@ -48,12 +48,13 @@ exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
 exec_cmd("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
 
 avg_cp = 0.0
-avg_copy_file_range = 0.0
 
 test = 11
 
 for i in range (test) :
     avg_cp += copy_test("cp")
+    if i == 0: # first iteration is just warming up
+        avg_cp = 0.0
     exec_cmd("rm " + fn_copy)
 
 exec_cmd("make clean")

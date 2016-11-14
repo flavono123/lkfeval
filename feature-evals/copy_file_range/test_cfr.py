@@ -53,6 +53,8 @@ test = 11
 
 for i in range (test) :
     avg_copy_file_range += copy_test("copy_file_range")
+    if i == 0: # first iteration is just warming up
+        avg_copy_file_range = 0.0
     exec_cmd("rm " + fn_cfr)
 
 exec_cmd("make clean")
