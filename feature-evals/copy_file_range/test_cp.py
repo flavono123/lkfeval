@@ -53,7 +53,7 @@ avg_copy_file_range = 0.0
 test = 11
 
 for i in range (test) :
-    avg_cp = copy_test("cp")
+    avg_cp += copy_test("cp")
     exec_cmd("rm " + fn_copy)
 
 exec_cmd("make clean")
