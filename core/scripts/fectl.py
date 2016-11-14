@@ -32,9 +32,9 @@ def add_feature(features, fname):
 	eval_dir = input('feature evauation dir : ') #상대경로일 경우 feature_eval에서
 	if not eval_dir.startswith('/'):
 		eval_dir = BASE_EVAL_PATH+'/'+eval_dir
-	eval_script_name = input('feature evaluation script name : ') #TODO check if it exists
 	print('--before evaluated kernel image--')
 	before = dict()
+	before['eval_script_name'] = input('feature evaluation script name : ') #TODO check if it exists
 	before['version'] = input('kerenl version : ')
 	before['config'] = dict()
 	j=0
@@ -51,6 +51,7 @@ def add_feature(features, fname):
 	print('--after evaluated kernel image--')
 	after = dict()
 	if input('same as before?(y/N)').lower() != 'y':
+		after['eval_script_name'] = input('feature evaluation script name : ') #TODO check if it exists
 		after['version'] = input('kerenl version : ')
 		after['config'] = dict()
 		j=0
@@ -67,7 +68,6 @@ def add_feature(features, fname):
 		after = before
 	feature = dict()
 	feature['evaluation_dir'] = eval_dir
-	feature['evaluation_script_name'] = eval_script_name
 	feature['before'] = before
 	feature['after'] = after
 	features[fname] = feature
@@ -83,17 +83,18 @@ def show_feature(features, fname):
 		eprint('feature not found.')
 		exit(1)
 	print('\tfeature evaluation script dir : '+feature['evaluation_dir'])
-	print('\tfeature evaluation script name : '+feature['evaluation_script_name'])
 
-	print('\tbefore : ')
 	before = feature['before']
 	after = feature['after']
+	print('\tbefore : ')
+	print('\t\tfeature evaluation script name : '+before['evaluation_script_name'])
 	print('\t\tkernel versoin : %s' % before['version'])
 	print('\t\tkernel configs : ')
 	f_configs = before['config']
 	for k,v in f_configs.items():
 		print('\t\t '+k+'='+str(v))
 	print('\tafter : ')
+	print('\t\tfeature evaluation script name : '+after['evaluation_script_name'])
 	print('\t\tkernel versoin : %s' % after['version'])
 	print('\t\tkernel configs : ')
 	f_configs = after['config']
@@ -124,7 +125,7 @@ if not hasattr(current_module, command+'_feature') :
 	print_help()
 	exit(1)
 
-feconf_file_name = 'feature_eval.conf'
+feconf_file_name = script_dir()+'/feature_eval.conf'
 feconf_file = ''
 features = ''
 if os.path.exists(feconf_file_name) :
