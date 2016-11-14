@@ -18,7 +18,7 @@ def set_copy_cmd(test):
         cmd = "./cp_time "
         dest = fn_copy
     elif test == "copy_file_range":
-        cmd = "./copy_file_range "
+        cmd = "./copy_file_range_time "
         dest = fn_cfr
     return cmd + src + " " + dest
 
@@ -56,5 +56,6 @@ for i in range (test) :
     exec_cmd("rm " + fn_cfr)
 
 exec_cmd("make clean")
+exec_cmd("rm " + fn_origin)
 
 print avg_copy_file_range / (test - 1)
