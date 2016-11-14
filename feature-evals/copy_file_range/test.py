@@ -12,6 +12,24 @@ def exec_cmd(cmd):
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
 
+def set_copy_cmd(test):
+    src = fn_origin
+    if test == "cp":
+        cmd = "./cp_time "
+        dest = fn_copy
+    elif test == "copy_file_range":
+        cmd = "./copy_file_range "
+        dest = fn_cfr
+    return cmd + src + " " + dest
+
+def copy_test(test):
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    cmd = set_copy_cmd(test)
+    return exec_cmd(cmd)
+
+
 # Generate random file for given size
 if not os.path.isfile ("copy_file_range_time") or not os.path.isfile ("cp_time"):
     os.system("make copy_file_range_time cp_time")
@@ -21,8 +39,6 @@ count = int (size / 1024)
 fn_origin = "origin.txt"
 fn_copy = "copy.txt"
 fn_cfr = "cfr.txt"
-fn_time = "time.log"
-fn_result = "copy_file_range_.log"
 
 exec_cmd("dd if=/dev/zero of=" + fn_origin + " bs=1k count=" + str(count) + " 2>/dev/null")
 
@@ -30,30 +46,19 @@ exec_cmd("dd if=/dev/zero of=" + fn_origin + " bs=1k count=" + str(count) + " 2>
 exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
 exec_cmd("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
 
-test = 11
-for i in range (test) :
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+avg_cp = 0.0
+avg_copy_file_range = 0.0
 
-    exec_cmd("echo cp >> " + fn_time + " 2>&1")
-    exec_cmd("./cp_time " + fn_origin + " " + fn_copy + " >> " + fn_time + " 2>&1")
-    exec_cmd("diff " + fn_origin + " " + fn_copy)
+test = 11
+
+for i in range (test) :
+    avg_cp = copy_test("cp")
     exec_cmd("rm " + fn_copy)
 
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-
-    exec_cmd("echo copy_file_range >> " + fn_time + " 2>&1")
-    exec_cmd("./copy_file_range_time " + fn_origin + " " + fn_cfr + " >> " + fn_time + " 2>&1")
-    exec_cmd("diff " + fn_origin + " " + fn_cfr)
+    avg_copy_file_range = copy_test("copy_file_range")
     exec_cmd("rm " + fn_cfr)
 
-    if i == 0 :
-        print ("CPU warming up!")
-    else :
-        print ("Testing copy " + str(size / 1024 / 1024 / 1024) + "GB file (%d/10)" % i )
-f_time = open (fn_time)
-f_time.close ()
+exec_cmd("make clean")
 
+print avg_cp
+print avg_copy_file_range
