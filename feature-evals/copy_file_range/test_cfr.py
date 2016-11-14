@@ -31,8 +31,8 @@ def copy_test(test):
 
 
 # Generate random file for given size
-if not os.path.isfile ("copy_file_range_time") or not os.path.isfile ("cp_time"):
-    os.system("make copy_file_range_time cp_time")
+if not os.path.isfile ("copy_file_range_time"):
+    os.system("make copy_file_range_time")
 size = 1073741824
 count = int (size / 1024)
 
@@ -46,19 +46,14 @@ exec_cmd("dd if=/dev/zero of=" + fn_origin + " bs=1k count=" + str(count) + " 2>
 exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
 exec_cmd("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
 
-avg_cp = 0.0
 avg_copy_file_range = 0.0
 
 test = 11
 
 for i in range (test) :
-    avg_cp = copy_test("cp")
-    exec_cmd("rm " + fn_copy)
-
     avg_copy_file_range = copy_test("copy_file_range")
     exec_cmd("rm " + fn_cfr)
 
 exec_cmd("make clean")
 
-print avg_cp
-print avg_copy_file_range
+print avg_copy_file_range / (test - 1)
