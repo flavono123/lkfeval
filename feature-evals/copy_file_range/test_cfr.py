@@ -33,7 +33,7 @@ def copy_test(test):
 
 # Generate random file for given size
 if not os.path.isfile ("copy_file_range_time"):
-    os.system("make copy_file_range_time 2>/dev/null") # Meaningless output go to trash
+    os.system("make copy_file_range_time 1>/dev/null") # Meaningless output go to trash
 size = 1073741824 * 3 # Guest Env. 4GB memory
 count = int (size / 1024)
 
