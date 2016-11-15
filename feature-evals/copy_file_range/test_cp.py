@@ -60,4 +60,4 @@ for i in range (test) :
 exec_cmd("make clean")
 exec_cmd("rm " + fn_origin)
 
-print avg_cp / (test - 1)
+print "cp(read()/write())\t", avg_cp / (test - 1), "s"

@@ -60,4 +60,4 @@ for i in range (test) :
 exec_cmd("make clean")
 exec_cmd("rm " + fn_origin)
 
-print avg_copy_file_range / (test - 1)
+print "copy_file_range()\t", avg_copy_file_range / (test - 1), "s"
