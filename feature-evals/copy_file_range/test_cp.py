@@ -60,4 +60,5 @@ for i in range (test) :
 exec_cmd("make clean")
 exec_cmd("rm " + fn_origin)
 
-print "cp(read()/write())\t", avg_cp / (test - 1), "s"
+row_format = "{:>12}|" * 2
+print row_format.format("cp(read()/write())", str(avg_cp) + "s")

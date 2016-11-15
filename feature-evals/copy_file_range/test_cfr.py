@@ -60,4 +60,5 @@ for i in range (test) :
 exec_cmd("make clean")
 exec_cmd("rm " + fn_origin)
 
-print "copy_file_range()\t", avg_copy_file_range / (test - 1), "s"
+row_format = "{:>12}|" * 2
+print row_format.format("copy_file_range()", str(avg_copy_file_range) + "s")
