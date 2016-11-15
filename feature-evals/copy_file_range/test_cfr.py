@@ -23,7 +23,6 @@ def set_copy_cmd(test):
     return cmd + src + " " + dest
 
 def copy_test(test):
-    #exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
     exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
     exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
     exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
@@ -45,9 +44,7 @@ fn_cfr = "cfr.txt"
 exec_cmd("dd if=/dev/zero of=" + fn_origin + " bs=1k count=" + str(count) + " 2>/dev/null")
 
 # System set
-#exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
 exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
-#exec_cmd("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
 exec_cmd("echo 90 > /proc/sys/vm/dirty_ratio")
 
 avg_copy_file_range = 0.0
