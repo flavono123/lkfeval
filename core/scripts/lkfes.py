@@ -93,7 +93,7 @@ eval_script = before_img['eval_script_name']
 configs_string = ''
 if configs:
 	configs_string = '-c '+' '.join([k+'='+v for k, v in configs.items()])
-command = '{0} {1} -e "{2}" "{3}" "{4}" "{5}" "{6}" "{7}" "{8}"'.format(kfe_path, configs_string,
+command = '{0} {1} -e "{2}" "{3}" "{4}" "{5}" "{6}" "{7}" "{8}" -sl'.format(kfe_path, configs_string,
 							eval_fname+'-before', vmx, rsa_key, eval_fname, version, eval_dir+'/'+eval_script, 'before.log')
 print(command)
 shell_command(command)
@@ -105,10 +105,24 @@ eval_script = after_img['eval_script_name']
 configs_string = ''
 if configs:
 	configs_string = '-c '+' '.join([k+'='+v for k, v in configs.items()])
-command = '{0} {1} -e "{2}" "{3}" "{4}" "{5}" "{6}" "{7}" "{8}"'.format(kfe_path, configs_string,
+command = '{0} {1} -e "{2}" "{3}" "{4}" "{5}" "{6}" "{7}" "{8}" -sl'.format(kfe_path, configs_string,
 							eval_fname+'-after', vmx, rsa_key, eval_fname, version, eval_dir+'/'+eval_script, 'after.log')
 print(command)
 shell_command(command)
+
+b_report = input('Want to re'
+				 ''
+				 'port result of feature evaluation to LKFES-report system?(Y/n)')
+
+if b_report != 'n':
+	import requests
+
+	reporter = input('your name? : ')
+	hw_specs = "hw spec"
+	url = '127.0.0.1:8000/post'
+	data = {'title': '', 'reporter': reporter, 'hw_spec': hw_spec, 'sw_spec': sw_specs}
+	files = {}
+	requests.post()
 
 
 

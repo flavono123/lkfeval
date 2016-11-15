@@ -46,7 +46,7 @@ if os.geteuid() != 0:
 
 #check required args
 if not (set(required_ops) < set(sys.argv)) :
-	eprint("failed : required_ops : "+str(requied_ops), print_on_error=False, exit_on_error=False)
+	eprint("failed : required_ops : "+str(required_ops), print_on_error=False, exit_on_error=False)
 	exit(1)
 
 #parsing argument
