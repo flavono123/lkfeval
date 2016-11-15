@@ -51,9 +51,9 @@ def get_vm_ip(vm):
 	
 	out, err = popen_guest_ip.communicate()
 
+
 	if popen_guest_ip.returncode:
-		print("Failed : Get gueste ip.", file=sys.stderr)
-		exit(1)
+            return None
 	return out.decode('utf-8').strip()
 
 parser = argparse.ArgumentParser(description='feature evaluation tools : make a kernel image and run a feature evaluation script')
@@ -135,6 +135,8 @@ if not os.path.isfile(args.vm):
 shell_command('vmrun start "{0}"'.format(args.vm))
 
 guest_ip = get_vm_ip(args.vm)
+while not guest_ip:
+    guest_ip = get_vm_ip(args.vm)
 print("guest ip : "+guest_ip)
 
 guest = Remote_ssh(guest_ip, args.ssh_key, user=args.guest_user)
@@ -168,7 +170,9 @@ if not eqaul_to_last :
     shell_command('vmrun reset "{0}"'.format(args.vm))
 
     guest_ip = get_vm_ip(args.vm)
-    print("guest ip : "+guest_ip)
+    while not guest_ip:
+        guest_ip = get_vm_ip(args.vm)
+    print("guest ip : " + guest_ip)
 
 log_dir = args.f_name
 guest.shell_command('mkdir -p {0}'.format(args.working_dir+'/'+log_dir))

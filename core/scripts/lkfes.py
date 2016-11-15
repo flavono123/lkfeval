@@ -81,7 +81,6 @@ except KeyError :
 
 print(feature)
 eval_dir = feature['evaluation_dir']
-eval_script = feature['evaluation_script_name']
 before_img = feature['before']
 after_img = feature['after']
 
@@ -90,6 +89,7 @@ kfe_path = scripts_path+'kfeature-eval.py'
 
 version = before_img['version']
 configs = before_img['config']
+eval_script = before_img['eval_script_name']
 configs_string = ''
 if configs:
 	configs_string = '-c '+' '.join([k+'='+v for k, v in configs.items()])
@@ -101,6 +101,7 @@ shell_command(command)
 
 version = after_img['version']
 configs = after_img['config']
+eval_script = after_img['eval_script_name']
 configs_string = ''
 if configs:
 	configs_string = '-c '+' '.join([k+'='+v for k, v in configs.items()])
