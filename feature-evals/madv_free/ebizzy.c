@@ -50,8 +50,11 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <sys/syscall.h>
 
 #include "ebizzy.h"
+
+#define MADV_FREE 8
 
 /*
  * Command line options
@@ -70,7 +73,7 @@ static unsigned int verbose;
 static unsigned int linear;
 static unsigned int touch_pages;
 static unsigned int no_lib_memcpy;
-
+static unsigned int madv_flag;
 /*
  * Other global variables
  */
@@ -101,7 +104,8 @@ usage(void)
 		"-S <seconds>\t Number of seconds to run\n"
 		"-t <num>\t Number of threads (2 * number cpus by default)\n"
 		"-v[v[v]]\t Be verbose (more v's for more verbose)\n"
-		"-z\t\t Linear search instead of binary search\n",
+		"-z\t\t Linear search instead of binary search\n"
+        "-f\t\t MADV_FREE flag of madvise() (MADV_DONTNEED by default)\n",
 		cmd);
 	exit(1);
 }
@@ -135,7 +139,7 @@ read_options(int argc, char *argv[])
 	cmd = argv[0];
 	opterr = 1;
 
-	while ((c = getopt(argc, argv, "lmMn:pPRs:S:t:vzT")) != -1) {
+	while ((c = getopt(argc, argv, "lmMn:pPRs:S:t:vzTf")) != -1) {
 		switch (c) {
 		case 'l':
 			no_lib_memcpy = 1;
@@ -184,6 +188,9 @@ read_options(int argc, char *argv[])
 		case 'z':
 			linear = 1;
 			break;
+        case 'f':
+            madv_flag = 1;
+            break;
 		default:
 			usage();
 		}
@@ -255,6 +262,11 @@ alloc_mem(size_t size)
 		if (p == NULL)
 			err = 1;
 	}
+
+    if (madv_flag)
+        syscall(__NR_madvise, p, size, MADV_FREE);
+    else
+        syscall(__NR_madvise, p, size, MADV_DONTNEED);
 
 	if (err) {
 		fprintf(stderr, "Couldn't allocate %zu bytes, try smaller "
