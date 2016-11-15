@@ -1,5 +1,5 @@
-#CFLAGS += -pg
-LDFLAGS += -lpthread -ljemalloc
+CFLAGS += -pthread
+LDFLAGS += -pthread -ljemalloc
 
 SRCS := ebizzy_madv.c
 
