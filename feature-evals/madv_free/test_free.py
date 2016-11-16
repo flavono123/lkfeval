@@ -14,7 +14,7 @@ def exec_cmd(cmd):
                             stderr=subprocess.PIPE)
 
 def set_cmd(flag):
-    cmd = "/ebizzy_madv -S 10 -n 512"
+    cmd = "./ebizzy_madv -S 10 -n 512"
     if flag == "MADV_FREE":
         cmd += " -f"
     return cmd
@@ -59,7 +59,7 @@ usr /= (test - 1)
 sys /= (test - 1)
 
 row = "MADV_FREE"
-col_list= ["Records/s", "Real(s)", "User(s)", "System(s)"]
+col_list= ["Records/s", "Real(s)", "System(s)", "User(s)"]
 data = numpy.array([records, real, usr, sys])
 row_format = "{:>15}" * (len(col_list) + 1)
 
