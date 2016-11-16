@@ -59,8 +59,8 @@ usr /= (test - 1)
 sys /= (test - 1)
 
 row = "MADV_FREE"
-col_list= ["Records/s", "Real(s)", "System(s)", "User(s)"]
-data = numpy.array([records, real, usr, sys])
+col_list= ["Records/s", "Real(s)", "User(s)", "System(s)"]
+data = numpy.array([int(records), real, usr, sys])
 row_format = "{:>15}" * (len(col_list) + 1)
 
 print row_format.format("", *col_list)
