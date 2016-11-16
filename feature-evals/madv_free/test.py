@@ -4,6 +4,7 @@
 import sys
 import os
 import subprocess
+import numpy
 
 def exec_cmd(cmd):
     return subprocess.Popen(cmd,
@@ -48,15 +49,21 @@ for i in range (test) :
     if i == 0: continue # first iteration is just warm up!
     output = result.stdout.read()
     field = output.split()
-    records += field[0]
-    real = field[3]
-    usr += field[6]
-    sys += field[9]
+    records += int(field[0])
+    real = float(field[3])
+    usr += float(field[6])
+    sys += float(field[9])
 
 records /= (test - 1)
 usr /= (test - 1)
 sys /= (test - 1)
 
-#row_format = "{:>15}" * 5
-#print row_format.format()
+row = "MADV_DONTNEED"
+col_list= ["Records/s", "Real(s)", "User(s)", "System(s)"]
+data = numpy.array([records, real, usr, sys])
+row_format = "{:>15}" * (len(col_list) + 1)
+
+print row_format.format("", *col_list)
+print row_format.format(row, *data)
+
 exec_cmd("make clean")
