@@ -48,7 +48,7 @@ for i in range (test) :
     result = ebizzy_madv("MADV_FREE")
     if i == 0: continue # first iteration is just warm up!
     output = result.stdout.read()
-    field = output.split()
+    field = str(output).split()
     records += int(field[0])
     real = float(field[3])
     usr += float(field[6])
