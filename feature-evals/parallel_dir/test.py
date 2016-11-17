@@ -56,11 +56,15 @@ accesses /= (test - 1)
 usr /= (test - 1)
 sys /= (test - 1)
 
+row = "serial mutex"
 uname_result = exec_cmd("uname -r")
-row, err =uname_result.communicate()
+version, err = uname_result.communicate()
+subversion = version.split('.')
+if int(subversion[1]) >= 7 :
+    row = "reader-writer semaphore"
 col_list= ["Accesses/s", "Real(s)", "User(s)", "System(s)"]
 data = numpy.array([int(accesses), real, usr, sys])
-row_format = "{:>15}" * (len(col_list) + 1)
+row_format = "{:>25}" * (len(col_list) + 1)
 
 print row_format.format("", *col_list)
 print row_format.format(row, *data)
