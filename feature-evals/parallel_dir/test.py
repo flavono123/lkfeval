@@ -23,6 +23,9 @@ def parallel_dir():
 exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
 exec_cmd("echo 90 > /proc/sys/vm/dirty_ratio")
 
+# Generate some file to lookup
+for i in range(10):
+    exec_cmd("dd if=/dev/zero of=file" + str(i) + " bs=1k count=1 2>/dev/null") # Small size does NOT effects path lookup
 bin_name = "parallel_dir"
 
 if not os.path.isfile(bin_name):
@@ -34,8 +37,8 @@ sys = 0.0
 
 test = 11
 
-# Output format of parallel_dir
-# <records> records/s
+# Output format of parallel_dir(resemble with 'ebizzy'`s)
+# <accesses> accesses/s
 # real    <time> s
 # usr     <time> s
 # sys     <time> s
@@ -62,4 +65,6 @@ row_format = "{:>15}" * (len(col_list) + 1)
 print row_format.format("", *col_list)
 print row_format.format(row, *data)
 
+# Clean up temporary files
 exec_cmd("make clean")
+exec_cmd("rm file*")
