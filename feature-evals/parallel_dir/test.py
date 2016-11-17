@@ -29,7 +29,8 @@ for i in range(10):
 bin_name = "parallel_dir"
 
 if not os.path.isfile(bin_name):
-    exec_cmd("make " + bin_name + " 1>/dev/null")
+    result = exec_cmd("make " + bin_name)
+    out, err = result.communicate() # NOT used variables, just for clean the terminal
 
 accesses = 0
 usr = 0.0
