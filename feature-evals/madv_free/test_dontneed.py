@@ -31,7 +31,8 @@ exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
 exec_cmd("echo 90 > /proc/sys/vm/dirty_ratio")
 
 if not os.path.isfile("ebizzy_madv"):
-    exec_cmd("make ebizzy_madv 1>/dev/null")
+    result = exec_cmd("make ebizzy_madv")
+    out, err = result.communicate()
 
 records = 0
 usr = 0.0
