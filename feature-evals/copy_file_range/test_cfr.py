@@ -61,4 +61,4 @@ exec_cmd("make clean")
 exec_cmd("rm " + fn_origin)
 
 row_format = "{:>20}" * 2
-print row_format.format("copy_file_range()", str(avg_copy_file_range) + "s")
+print row_format.format("copy_file_range()", str(round(avg_copy_file_range / (test - 1), 3)) + "s")
