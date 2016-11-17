@@ -23,17 +23,19 @@ def set_copy_cmd(test):
     return cmd + src + " " + dest
 
 def copy_test(test):
-    exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
-    exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
-    exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
     cmd = set_copy_cmd(test)
     result = exec_cmd(cmd)
     return float(result.stdout.read().strip())
 
 
 # Generate random file for given size
-if not os.path.isfile ("cp_time"):
-    os.system("make cp_time 1>/dev/null") # Meaningless output go to trash
+bin_name = "cp_time"
+if not os.path.isfile (bin_name):
+    os.system("make " + bin_name + " 1>/dev/null")
+
 size = 1073741824 * 3 # Guest Env. 4GB memory
 count = int (size / 1024)
 

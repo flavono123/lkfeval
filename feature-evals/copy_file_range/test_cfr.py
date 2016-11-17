@@ -23,9 +23,9 @@ def set_copy_cmd(test):
     return cmd + src + " " + dest
 
 def copy_test(test):
-    exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
-    exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
-    exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
     cmd = set_copy_cmd(test)
     result = exec_cmd(cmd)
     return float(result.stdout.read().strip())
