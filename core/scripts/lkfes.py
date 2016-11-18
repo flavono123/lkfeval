@@ -125,23 +125,27 @@ if b_report != 'n':
         title = eval_fname
     desc = input('description : ')
     reporter = input('your name? : ')
-    sw_specs = dict()
-    hw_specs = None
-    with open(project_root+'/logs/'+eval_fname+'/before.log.sw_spec') as f:
-        sw_specs['before'] = json.load(f)
-    with open(project_root+'/logs/'+eval_fname+'/after.log.sw_spec') as f:
-        sw_specs['after'] = json.load(f)
-    with open(project_root+'/logs/'+eval_fname+'/'+eval_fname+'.hw_spec') as f:
-        hw_specs = json.load(f)
+    # sw_specs = dict()
+    # hw_specs = None
+    # with open(project_root+'/logs/'+eval_fname+'/before.log.sw_spec') as f:
+    #     sw_specs['before'] = json.load(f)
+    # with open(project_root+'/logs/'+eval_fname+'/after.log.sw_spec') as f:
+    #     sw_specs['after'] = json.load(f)
+    # with open(project_root+'/logs/'+eval_fname+'/'+eval_fname+'.hw_spec') as f:
+    #     hw_specs = json.load(f)
     url = 'http://127.0.0.1:8000/report/post/'
-    data = {'title': title, 'desc' : desc, 'reporter': reporter, 'hw_specs': hw_specs, 'sw_specs': sw_specs}
+    data = {'title': title, 'desc' : desc, 'reporter': reporter}
 
     before_log = open(project_root+'/logs/'+eval_fname+'/before.log')
     after_log = open(project_root+'/logs/'+eval_fname+'/after.log')
+    hw_specs = open(project_root+'/logs/'+eval_fname+'/hw_spec')
+    before_sw_specs = open(project_root+'/logs/'+eval_fname+'/before.log.sw_spec')
+    after_sw_specs = open(project_root+'/logs/'+eval_fname+'/after.log.sw_spec')
     print("archiving extra files..")
-    zip_file = shutil.make_archive('extra.tmp', 'zip', base_dir=eval_dir)
+    zip_file = shutil.make_archive('extra', 'zip', base_dir=eval_dir)
     extra_zip = open(zip_file, 'rb')
-    files = {'log-before' : before_log, 'log-after' : after_log, 'extra' : extra_zip}
+    files = {'log-before' : before_log, 'log-after' : after_log, 'extra' : extra_zip,
+             'before-sw-specs' : before_sw_specs, 'after-sw-specs' : after_sw_specs, 'hw-specs' : hw_specs}
 
     print("sending data to server..")
     try:
@@ -152,6 +156,9 @@ if b_report != 'n':
     before_log.close()
     after_log.close()
     extra_zip.close()
+    before_sw_specs.close()
+    after_sw_specs.close()
+    hw_specs.close()
     os.remove(zip_file)
 
     print("done")

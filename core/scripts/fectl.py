@@ -32,40 +32,43 @@ def add_feature(features, fname):
 	eval_dir = input('feature evauation dir : ') #상대경로일 경우 feature_eval에서
 	if not eval_dir.startswith('/'):
 		eval_dir = BASE_EVAL_PATH+'/'+eval_dir
-	print('--before evaluated kernel image--')
+	print('----before----')
 	before = dict()
-	before['eval_script_name'] = input('feature evaluation script name : ') #TODO check if it exists
-	before['version'] = input('kerenl version : ')
+	before['eval_script_name'] = input('before - feature evaluation script name : ') #TODO check if it exists
+	before['version'] = input('before - kerenl version : ')
 	before['config'] = dict()
 	j=0
-	print('kernel configs(Crtl+D to stop) : ')
+	print('before - kernel configs(Crtl+D to stop) : ')
 	while True :
 		try:
-			config_name = input('kernel config[%d] name : ' % j)
-			config_value = input('kernel config[%d] value : ' % j)
+			config_name = input('before - kernel config[%d] name : ' % j)
+			config_value = input('before - kernel config[%d] value : ' % j)
 			before['config'][config_name] = config_value
 			j += 1
 		except EOFError:
+			print()
 			break
 
-	print('--after evaluated kernel image--')
 	after = dict()
-	if input('same as before?(y/N)').lower() != 'y':
-		after['eval_script_name'] = input('feature evaluation script name : ') #TODO check if it exists
-		after['version'] = input('kerenl version : ')
+	if input('same kerenl as before?(y/N) : ').lower() != 'y':
+		print('----after----')
+		after['eval_script_name'] = input('after - feature evaluation script name : ') #TODO check if it exists
+		after['version'] = input('after - kerenl version : ')
 		after['config'] = dict()
 		j=0
-		print('kernel configs(Crtl+D to stop) : ')
+		print('after - kernel configs(Crtl+D to stop) : ')
 		while True:
 			try:
-				config_name = input('kernel config[%d] name : ' % j)
-				config_value = input('kernel config[%d] value : ' % j)
+				config_name = input('after - kernel config[%d] name : ' % j)
+				config_value = input('after - kernel config[%d] value : ' % j)
 				after['config'][config_name] = config_value
 				j += 1
 			except EOFError:
 				break
 	else:
 		after = before
+		after['eval_script_name'] = input('after - feature evaluation script name : ') #TODO check if it exists
+
 	feature = dict()
 	feature['evaluation_dir'] = eval_dir
 	feature['before'] = before

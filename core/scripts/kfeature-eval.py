@@ -52,7 +52,7 @@ class Remote_ssh:
                              error_str, print_on_error, exit_on_error)
 
     def popen_command(self, command, print_stdout=False, print_stderr=False):
-        command = 'ssh -i {0} -p {1} "{2}@{3}" "{4}"'\
+        command = 'ssh -i {0} -p {1} "{2}@{3}" {4}'\
             .format(self._ssh_key, self._port, self._user, self._addr, command)
         return popen_command(command)
 
@@ -224,7 +224,7 @@ guest.shell_command('rm -rf '+args.working_dir)
 if args.spec_log:
 
     print("measuring spec of guest vm..")
-    hw_spec_log_file = script_dir()+'/../../logs/'+log_dir +'/'+args.f_name+'.hw_spec'
+    hw_spec_log_file = script_dir()+'/../../logs/'+log_dir +'/hw_spec'
     if not os.path.exists(hw_spec_log_file):
         hw_spec = dict()
         cpu = dict()
