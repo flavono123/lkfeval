@@ -87,14 +87,14 @@ def show_feature(features, fname):
 	before = feature['before']
 	after = feature['after']
 	print('\tbefore : ')
-	print('\t\tfeature evaluation script name : '+before['evaluation_script_name'])
+	print('\t\tfeature evaluation script name : '+before['eval_script_name'])
 	print('\t\tkernel versoin : %s' % before['version'])
 	print('\t\tkernel configs : ')
 	f_configs = before['config']
 	for k,v in f_configs.items():
 		print('\t\t '+k+'='+str(v))
 	print('\tafter : ')
-	print('\t\tfeature evaluation script name : '+after['evaluation_script_name'])
+	print('\t\tfeature evaluation script name : '+after['eval_script_name'])
 	print('\t\tkernel versoin : %s' % after['version'])
 	print('\t\tkernel configs : ')
 	f_configs = after['config']
