@@ -23,9 +23,9 @@ def set_copy_cmd(test):
     return cmd + src + " " + dest
 
 def copy_test(test):
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
     cmd = set_copy_cmd(test)
     result = exec_cmd(cmd)
     return float(result.stdout.read().strip())
@@ -33,8 +33,8 @@ def copy_test(test):
 
 # Generate random file for given size
 if not os.path.isfile ("copy_file_range_time"):
-    os.system("make copy_file_range_time")
-size = 1073741824
+    os.system("make copy_file_range_time 1>/dev/null") # Meaningless output go to trash
+size = 1073741824 * 3 # Guest Env. 4GB memory
 count = int (size / 1024)
 
 fn_origin = "origin.txt"
@@ -44,8 +44,8 @@ fn_cfr = "cfr.txt"
 exec_cmd("dd if=/dev/zero of=" + fn_origin + " bs=1k count=" + str(count) + " 2>/dev/null")
 
 # System set
-exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-exec_cmd("sudo sh -c \"/bin/echo 90 > /proc/sys/vm/dirty_ratio\"")
+exec_cmd("echo 3 > /proc/sys/vm/drop_caches")
+exec_cmd("echo 90 > /proc/sys/vm/dirty_ratio")
 
 avg_copy_file_range = 0.0
 
@@ -60,4 +60,5 @@ for i in range (test) :
 exec_cmd("make clean")
 exec_cmd("rm " + fn_origin)
 
-print avg_copy_file_range / (test - 1)
+row_format = "{:>20}" * 2
+print row_format.format("copy_file_range()", str(round(avg_copy_file_range / (test - 1), 3)) + "s")
