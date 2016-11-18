@@ -74,6 +74,7 @@ static unsigned int linear;
 static unsigned int touch_pages;
 static unsigned int no_lib_memcpy;
 static unsigned int madv_flag;
+
 /*
  * Other global variables
  */
@@ -267,8 +268,8 @@ alloc_mem(size_t size)
         syscall(__NR_madvise, p, size, MADV_FREE);
     else
         syscall(__NR_madvise, p, size, MADV_DONTNEED);
-
-	if (err) {
+	
+    if (err) {
 		fprintf(stderr, "Couldn't allocate %zu bytes, try smaller "
 			"chunks or size options\n"
 			"Using -n %u chunks and -s %u size\n",
