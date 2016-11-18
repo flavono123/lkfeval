@@ -15,9 +15,9 @@ def exec_cmd(cmd):
                             stderr=subprocess.PIPE)
 
 def fio(test):
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-    exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
     cmd = "sudo fio --directory=/mnt/loop --direct=1 --bs=4k --size=1G --numjobs=4 --time_based --runtime=10 --norandommap --minimal --name dio_aio --rw=" + test
     return exec_cmd(cmd)
     #proc = exec_cmd(cmd)
@@ -49,16 +49,15 @@ def buffercache():
     return float(field[10]), float(field[13])
 
 # Make loop block device as file
-exec_cmd("rm log")
-exec_cmd("dd if=/dev/zero of=lbd.img bs=1k count=1536000 > log 2>&1")
-exec_cmd("losetup /dev/loop1 lbd.img >> log 2>&1")
-exec_cmd("mkfs -t ext4 /dev/loop1 >> log 2>&1")
+os.system("dd if=/dev/zero of=lbd.img bs=1k count=1536000 2>/dev/null")
+os.system("losetup /dev/loop1 lbd.img 2>/dev/null")
+os.system("mkfs -t ext4 /dev/loop1 > /dev/null 2>&1")
 os.mkdir("/mnt/loop")
-exec_cmd("mount -t ext4 /dev/loop1 /mnt/loop >> log 2>&1")
+os.system("mount -t ext4 /dev/loop1 /mnt/loop 1>/dev/null")
 
 # System set; drop page, cache and , and set the ratio of write back max as possible
-exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
-exec_cmd("sudo sh -c \"/bin/echo 3 > /proc/sys/vm/drop_caches\"")
+os.system("echo 3 > /proc/sys/vm/drop_caches")
+os.system("echo 90 > /proc/sys/vm/dirty_ratio")
 
 rand_read_iops = 0
 rand_read_buffer = 0.0
@@ -112,12 +111,12 @@ table_data = numpy.array([[int(rand_read_iops), int(read_iops), int(rand_write_i
         [sizeof_fmt(rand_read_buffer), sizeof_fmt(read_buffer), sizeof_fmt(rand_write_buffer), sizeof_fmt(write_buffer)],
         [sizeof_fmt(rand_read_cache), sizeof_fmt(read_cache), sizeof_fmt(rand_write_cache), sizeof_fmt(write_cache)]])
 
-row_format = "{:>10}" * (len(col_list) + 1)
+row_format = "{:>12}" * (len(col_list) + 1)
 print row_format.format("", *col_list)
 for row, data in zip(row_list, table_data):
     print row_format.format(row, *data)
 
-exec_cmd("umount /mnt/loop >> log 2>&1")
-exec_cmd("rm -rf /mnt/loop >> log 2>&1")
-exec_cmd("losetup -d /dev/loop1 >> log 2>&1")
-exec_cmd("rm lbd.img >> log 2>&1")
+os.system("umount /mnt/loop")
+os.system("rm -rf /mnt/loop")
+os.system("losetup -d /dev/loop1")
+os.system("rm lbd.img")
