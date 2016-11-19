@@ -263,9 +263,9 @@ alloc_mem(size_t size)
 			err = 1;
 	}
 
-    memset(p, 1, size);
-
     if (size > 4096) {
+        memset(p, 1, size);
+        
         if (madv_flag)
             madvise(p, size, MADV_FREE);
         else
