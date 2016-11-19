@@ -4,6 +4,7 @@
 import json
 import sys
 import os
+import argparse
 
 
 def eprint(*args, **kwargs):
@@ -37,29 +38,24 @@ dname = os.path.dirname(abspath)
 project_root = dname + '/../..'
 # os.chdir(dname+'/../..') #project root dir
 
+parser = argparse.ArgumentParser(description='Linux Kerenl Feature Evaluation System : '
+                                             'by referring the config file, proceed kernel feature evaluation'
+                                             '(compile, run the script, report, ...)')
 
-vmx = ''
-rsa_key = ''
-eval_fname = ''
-try:
-    vmx = sys.argv[1]
-    rsa_key = sys.argv[2]
-    eval_fname = sys.argv[3]
-except IndexError:
-    print('missing required arguments', file=sys.stderr)
-    exit(1)
-conf_path = project_root + '/core/scripts/feature_eval.conf'
+parser.add_argument('vm', help='(.vmx) vmware machine on which the evaluations is executed')
+parser.add_argument('ssh_key',help='ssh-key to vmware guest(rsa)')
+parser.add_argument('eval_fname',help='evalution feature name in config file')
+parser.add_argument('-cp', '--config_path', help="location of config gile. default : (ROOT)/core/sciprts/feature_eval.conf",
+                    default=project_root + '/core/scripts/feature_eval.conf')
+
+args = parser.parse_args()
+
+vmx = args.vm
+rsa_key = args.ssh_key
+eval_fname = args.eval_fname
+conf_path = args.config_path
+
 # TODO conf_path를 실행 디렉토리랑 상관없이 읽을 수 있도록 해야함.
-
-
-
-
-# parsing argument
-pre_arg = ''
-for arg in sys.argv:
-    if pre_arg == '--conf_path':
-        conf_path = arg
-    pre_arg = arg
 
 features = ''
 try:

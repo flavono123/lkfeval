@@ -77,7 +77,7 @@ def get_vm_ip(vm):
 parser = argparse.ArgumentParser(description='feature evaluation tools : make a kernel image and run a feature evaluation script')
 
 #required arguments
-parser.add_argument('vm', help='(.vmx) vmware machine')
+parser.add_argument('vm', help='(.vmx) vmware machine on which the evaluations is executed')
 parser.add_argument('ssh_key', help='ssh key to connect to geust')
 parser.add_argument('f_name', help='the name of evaluated feature')
 parser.add_argument('k_version', help='copliling kerenl image on which evaluation will run')

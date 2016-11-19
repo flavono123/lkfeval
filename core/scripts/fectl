@@ -4,6 +4,7 @@
 import sys
 import os
 import json
+import argparse
 
 def script_dir():
     return sys.path[0]
@@ -115,17 +116,27 @@ def list_feature(features, opt = '--default'):
 		for fname in features.keys():
 			show_feature(features, fname)
 
-if len(sys.argv) < 2 :
-	eprint("missing required arguments")
-	print_help()
-	exit(1)
 
-current_module = sys.modules[__name__]
-command = sys.argv[1]
+parser = argparse.ArgumentParser(description='feature evaluation control : edit feature_eval.conf for lkfes')
 
-if not hasattr(current_module, command+'_feature') :
-	eprint("invalid command : %s" % command)
-	print_help()
+parsers = parser.add_subparsers(help='actions')
+parser_add = parsers.add_parser('add', help='add new evaluating feature')
+parser_add.set_defaults(action='add')
+parser_add.add_argument('feature', help='adding feature name')
+parser_del = parsers.add_parser('del', help='delete evaluating feature')
+parser_del.set_defaults(action='del')
+parser_del.add_argument('feature', help='deleting feature name')
+parser_list = parsers.add_parser('list', help='list evaluating features')
+parser_list.set_defaults(action='list')
+parser_list.add_argument('--details', action='store_true', help='list with detail infos')
+parser_show = parsers.add_parser('show', help='show evaluating feature')
+parser_show.set_defaults(action='show')
+parser_show.add_argument('feature', help='adding feature name')
+
+args = parser.parse_args()
+
+if len(sys.argv) == 1:
+	print(parser.print_help())
 	exit(1)
 
 feconf_file_name = script_dir()+'/feature_eval.conf'
@@ -138,7 +149,8 @@ if os.path.exists(feconf_file_name) :
 else:
 	features = json.loads('{}')
 
-command_handler = getattr(current_module, command+'_feature')
+current_module = sys.modules[__name__]
+command_handler = getattr(current_module, args.action+'_feature')
 if len(sys.argv) > 2:
 	command_handler(features, sys.argv[2])
 else:
