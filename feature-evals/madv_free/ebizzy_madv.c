@@ -264,12 +264,16 @@ alloc_mem(size_t size)
 			err = 1;
 	}
 
-    if (madv_flag)
-        syscall(__NR_madvise, p, size, MADV_FREE);
-    else
-        syscall(__NR_madvise, p, size, MADV_DONTNEED);
-	
-    if (err) {
+    if (size > 4096) {
+        memset(p, 1, size);
+        
+        if (madv_flag)
+            madvise(p, size, MADV_FREE);
+        else
+            madvise(p, size, MADV_DONTNEED);
+    }
+
+	if (err) {
 		fprintf(stderr, "Couldn't allocate %zu bytes, try smaller "
 			"chunks or size options\n"
 			"Using -n %u chunks and -s %u size\n",
