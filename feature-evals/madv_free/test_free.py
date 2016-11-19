@@ -14,7 +14,7 @@ def exec_cmd(cmd):
                             stderr=subprocess.PIPE)
 
 def set_cmd(flag):
-    cmd = "./ebizzy_madv -S 10 -n 512"
+    cmd = "./ebizzy_madv -S 10 -n 512 -m"
     if flag == "MADV_FREE":
         cmd += " -f"
     return cmd
