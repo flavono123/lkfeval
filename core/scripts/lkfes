@@ -133,7 +133,7 @@ if b_report != 'n':
     #     sw_specs['after'] = json.load(f)
     # with open(project_root+'/logs/'+eval_fname+'/'+eval_fname+'.hw_spec') as f:
     #     hw_specs = json.load(f)
-    url = 'http://127.0.0.1:8000/report/post/'
+    url = 'http://104.199.211.38/report/post/'
     data = {'title': title, 'desc' : desc, 'reporter': reporter}
 
     before_log = open(project_root+'/logs/'+eval_fname+'/before.log')
