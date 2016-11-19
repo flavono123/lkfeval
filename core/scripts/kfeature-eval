@@ -171,7 +171,7 @@ guest.upload(eval_dir, args.working_dir)
 remote_script_dir = args.working_dir+'/'+script_dir().split('/')[-1]
 
 if not eqaul_to_last :
-    compile_script = remote_script_dir+'/kmake.py'
+    compile_script = remote_script_dir+'/kmake'
     if args.config:
         compile_script_args = '-v "{0}" -c "{1}" -e "{2}"'.format(args.k_version, ",".join(args.config), args.extraversion)
     else:
@@ -189,7 +189,7 @@ if not eqaul_to_last :
     last_evaluated_kernel_file.close()
 
 
-    update_script = remote_script_dir+'/kupdate.sh'
+    update_script = remote_script_dir+'/kupdate'
     k_version = args.k_version
     if k_version.count('.') == 1 :
         k_version = k_version+'.0'
@@ -282,6 +282,8 @@ if args.spec_log:
     with open(sw_spec_log_file, 'w') as sw_spec_log:
         json.dump(sw_spec, sw_spec_log)
 
+    #remove compiled images
+    # guest.shell_command('rm /boot')
 
 
 

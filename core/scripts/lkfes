@@ -86,7 +86,7 @@ before_img = feature['before']
 after_img = feature['after']
 
 scripts_path = project_root + '/core/scripts/'
-kfe_path = scripts_path + 'kfeature-eval.py'
+kfe_path = scripts_path + 'kfeature-eval'
 
 version = before_img['version']
 configs = before_img['config']
