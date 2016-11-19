@@ -271,11 +271,12 @@ if args.spec_log:
 
     sw_spec = dict()
     sw_spec['configs'] = args.config
-    out, err = guest.popen_command('cat /etc/os-release | PRETTY_NAME')
+    out, err = guest.popen_command('cat /etc/os-release | grep PRETTY_NAME')
     if out:
-        sw_spec['os_release'] = out.strip().strip('"')
+        sw_spec['os_release'] = out.split('=')[-1].strip().strip('"')
     sw_spec['kernel_version'] = args.k_version
-    out, err = guest.popen_command('echo __VERSION__ | gcc -E - | grep -v ^#')
+    out, err = guest.popen_command('"echo __VERSION__ | gcc -E - | grep -v ^#"')
+    print(out)
     if out:
         sw_spec['compiler'] = out.strip().strip('"')
     sw_spec_log_file = script_dir()+'/../../logs/'+log_dir+'/'+args.log_file_name+'.sw_spec'
