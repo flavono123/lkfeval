@@ -138,7 +138,7 @@ if b_report != 'n':
     before_sw_specs = open(project_root+'/logs/'+eval_fname+'/before.log.sw_spec')
     after_sw_specs = open(project_root+'/logs/'+eval_fname+'/after.log.sw_spec')
     print("archiving extra files..")
-    zip_file = shutil.make_archive('extra', 'zip', base_dir=eval_dir)
+    zip_file = shutil.make_archive('extra', 'zip', eval_dir)
     extra_zip = open(zip_file, 'rb')
     files = {'log-before' : before_log, 'log-after' : after_log, 'extra' : extra_zip,
              'before-sw-specs' : before_sw_specs, 'after-sw-specs' : after_sw_specs, 'hw-specs' : hw_specs}
