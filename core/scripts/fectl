@@ -67,7 +67,7 @@ def add_feature(features, fname):
 			except EOFError:
 				break
 	else:
-		after = before
+		after = before.copy()
 		after['eval_script_name'] = input('after - feature evaluation script name : ') #TODO check if it exists
 
 	feature = dict()
