@@ -47,19 +47,19 @@ ssh key (that is registerd to guest)
 ## Usage details
 * fectl  
     <pre>
-      usage: fectl [-h] {add,del,list,show} ...  
+  usage: fectl [-h] {add,del,list,show} ...  
 
-      feature evaluation control : edit feature_eval.conf for lkfes
+  feature evaluation control : edit feature_eval.conf for lkfes
 
-      positional arguments:
-          {add,del,list,show}  actions
-          add                add new evaluating feature
-          del                delete evaluating feature
-          list               list evaluating features
-          show               show evaluating feature
+  positional arguments:
+      {add,del,list,show}  actions
+      add                add new evaluating feature
+      del                delete evaluating feature
+      list               list evaluating features
+      show               show evaluating feature
 
-      optional arguments:
-        -h, --help           show this help message and exit
+  optional arguments:
+    -h, --help           show this help message and exit
     </pre>
 
 * lkfes
