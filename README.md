@@ -63,26 +63,27 @@ ssh key (that is registerd to guest)
     </pre>
 
 * lkfes
-      usage: lkfes [-h] [-cp CONFIG_PATH] vm ssh_key eval_fname
+  <pre>
+  usage: lkfes [-h] [-cp CONFIG_PATH] vm ssh_key eval_fname
 
-      Linux Kerenl Feature Evaluation System : by referring the config file, proceed
-      kernel feature evaluation(compile, run the script, report, ...)
+  Linux Kerenl Feature Evaluation System : by referring the config file, proceed
+  kernel feature evaluation(compile, run the script, report, ...)
 
-      positional arguments:
-        vm                    (.vmx) vmware machine on which the evaluations is
-                              executed
-        ssh_key               ssh-key to vmware guest(rsa)
-        eval_fname            evalution feature name in config file
+  positional arguments:
+    vm                    (.vmx) vmware machine on which the evaluations is
+                          executed
+    ssh_key               ssh-key to vmware guest(rsa)
+    eval_fname            evalution feature name in config file
 
-      optional arguments:
-        -h, --help            show this help message and exit
-        -cp CONFIG_PATH, --config_path CONFIG_PATH
-                              location of config gile. default :
-                              (ROOT)/core/sciprts/feature_eval.conf
+  optional arguments:
+    -h, --help            show this help message and exit
+    -cp CONFIG_PATH, --config_path CONFIG_PATH
+                          location of config gile. default :
+                          (ROOT)/core/sciprts/feature_eval.conf
 
-
+    </pre>
 * kfeature-eval
-
+      <pre>
       usage: kfeature-eval [-h] [-c CONFIG [CONFIG ...]] [-vp VMRUN_PATH]
                            [-e EXTRAVERSION] [-gu GUEST_USER] [-gp GUEST_PASSWD]
                            [-sshp SSH_PORT] [-wd WORKING_DIR] [-sl]
@@ -118,3 +119,4 @@ ssh key (that is registerd to guest)
                               working dir in guest. scripts and logs are maked
                               temporarily on the directory.
         -sl, --spec_log       enable logging the spec of guest.
+    </pre>
