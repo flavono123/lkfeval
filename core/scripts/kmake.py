@@ -7,6 +7,10 @@ import argparse
 import subprocess
 #from subprocess import Popen, PIPE
 
+## constants
+ROOT = 0
+
+## global var
 kernel_src_dir = "/usr/src/linux-stable"
 kernel_stable_repo = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git"
 
@@ -23,6 +27,13 @@ def run(cmd):
 def perror(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
-## 0. Prepare dependent tools
+## NOTE: script run under the root previledge
+if os.geteuid() != 0:
+    perror("kmake: Pemission denied")
+    exit(1)
+
+else:
+    print("Hello, root!")
+## 0. Prepare dependency tools
 # gcc, make, git and openssl are essential
 # 
