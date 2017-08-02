@@ -10,10 +10,19 @@ import subprocess
 ## constants
 ROOT = 0
 
-## global var
+## global vars
+# kernel resources
 kernel_src_dir = "/usr/src/linux-stable"
 kernel_stable_repo = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git"
+# arguments
+parser = argparse.ArgumentParser(description='Kerenl Make:'
+                                             'make specific kernel image by referring args.'
+                                             '(kernel version, configs ..)')
+parser.add_argument = ('version', help='taget kernel version')
+args = parser.parse_args()
+version = args.version
 
+## funcs
 # run 'string' shell command
 def run(cmd):
     popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -43,3 +52,8 @@ else:
 
 run("cd /usr/src")
 run("git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git")
+
+## 2. Checkout to speicific kernel version
+#
+
+run("git tag ", + version)
