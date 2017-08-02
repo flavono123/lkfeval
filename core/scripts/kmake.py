@@ -37,3 +37,9 @@ else:
 ## 0. Prepare dependency tools
 # gcc, make, git and openssl are essential
 # 
+
+## 1. Clone kernel's git stable repository
+#
+
+run("cd /usr/src")
+run("git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git")
